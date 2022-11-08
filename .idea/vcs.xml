@@ -8,7 +8,7 @@
   </component>
   <component name="VcsDirectoryMappings">
     <mapping directory="$PROJECT_DIR$" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/gateway" vcs="Git" />
-    <mapping directory="$PROJECT_DIR$/user-service" vcs="Git" />
+    <mapping directory="$PROJECT_DIR$/gateway" vcs="" />
+    <mapping directory="$PROJECT_DIR$/user-service" vcs="" />
   </component>
 </project>
