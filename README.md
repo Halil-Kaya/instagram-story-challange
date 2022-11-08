@@ -1,1 +1,1 @@
-# instagram-story-challange
+I'm just trying something with some technologies. I will add an document in the future.(or i just destroy the repo)
