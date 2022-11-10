@@ -1,0 +1,45 @@
+version: "3.9"
+
+services:
+  project-base-node:
+    image: project-base-node
+    build:
+      context: .
+      dockerfile: Dockerfile
+
+  gateway:
+    image: project-base-node
+    ports:
+      - 3050:3050
+    networks:
+      - app-net
+    environment:
+      - APP_NAME=gateway
+    command: './init.sh'
+    volumes:
+      - './apps/gateway:/project/apps/gateway:ro'
+      - './libs:/project/libs:ro'
+
+  user-service:
+    image: project-base-node
+    networks:
+      - app-net
+    environment:
+      - APP_NAME=user-service
+    command: './init.sh'
+    volumes:
+      - './apps/user-service:/project/apps/user-service:ro'
+      - './libs:/project/libs:ro'
+    depends_on:
+      - mongo
+
+  mongo:
+    image: mongo
+    ports:
+      - 27016:27017
+    networks:
+      - app-net
+
+
+networks:
+  app-net:
