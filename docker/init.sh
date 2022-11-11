@@ -1,5 +1,3 @@
 #!/usr/bin/env bash
-
-cd project
-
+cd /project
 npm run start:dev $APP_NAME

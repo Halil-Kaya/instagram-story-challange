@@ -26,6 +26,24 @@
       "compilerOptions": {
         "tsConfigPath": "apps/user-service/tsconfig.app.json"
       }
+    },
+    "interfaces": {
+      "type": "library",
+      "root": "libs/interfaces",
+      "entryFile": "index",
+      "sourceRoot": "libs/interfaces/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/interfaces/tsconfig.lib.json"
+      }
+    },
+    "interceptors": {
+      "type": "library",
+      "root": "libs/interceptors",
+      "entryFile": "index",
+      "sourceRoot": "libs/interceptors/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/interceptors/tsconfig.lib.json"
+      }
     }
   }
 }
