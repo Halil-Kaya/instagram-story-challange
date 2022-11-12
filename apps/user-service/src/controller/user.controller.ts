@@ -11,7 +11,7 @@ export class UserController {
     }
 
     @MessagePattern('create')
-    async accumulate(payload: UserPayloads.Create): Promise<User> {
+    async createUser(payload: UserPayloads.Create): Promise<User> {
         return this.userService.create(payload)
     }
 }
