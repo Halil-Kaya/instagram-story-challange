@@ -1,6 +1,6 @@
 import {Controller, Get, Inject} from '@nestjs/common';
 import {ClientProxy} from "@nestjs/microservices";
-import {firstValueFrom} from "rxjs";
+import {catchError} from "rxjs";
 
 @Controller()
 export class AppController {
@@ -10,8 +10,11 @@ export class AppController {
     @Get()
     async getHello() {
         console.log("istek geldi")
-        const re = await firstValueFrom(this.client.send('test', ''))
-        console.log(re)
-        return re
+        return this.client.send('create', {})
+            .pipe(
+                catchError((err): any => {
+                    console.log(err)
+                })
+            )
     }
 }

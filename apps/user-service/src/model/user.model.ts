@@ -8,7 +8,7 @@ export type UserDocument = User & Document;
 @Schema({
     versionKey: false
 })
-export class User extends Document implements IUser {
+export class User implements IUser {
     @Prop({type: Types.ObjectId})
     _id: string;
 
@@ -18,7 +18,7 @@ export class User extends Document implements IUser {
     @Prop({type: String, required: true})
     nickname: string;
 
-    @Prop({type: String, minlength: 8, maxlength: 24, required: true})
+    @Prop({type: String, minlength: 8, maxlength: 24, select: false, required: true})
     password: string
 
     @Prop({type: Date, default: Date.now, required: false})
