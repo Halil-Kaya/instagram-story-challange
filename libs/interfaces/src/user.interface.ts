@@ -3,4 +3,5 @@ export class IUser {
     fullName: string;
     nickname: string;
     password: string;
+    createdAt: Date;
 }

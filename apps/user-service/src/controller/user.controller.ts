@@ -1,12 +1,13 @@
 import {Controller} from '@nestjs/common';
 import {MessagePattern} from "@nestjs/microservices";
+import * as UserPayloads from "../payload";
 
 @Controller()
 export class UserController {
 
-    @MessagePattern('test')
-    async accumulate(data: any) {
-        console.log("mesaj geldi")
+    @MessagePattern('create')
+    async accumulate(data: UserPayloads.Create)  {
+        console.log("mesaj geldi-> ", data)
         return "data geldi"
     }
 

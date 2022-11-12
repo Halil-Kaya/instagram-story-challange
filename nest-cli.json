@@ -5,7 +5,7 @@
   "monorepo": true,
   "root": "apps/gateway",
   "compilerOptions": {
-    "webpack": false,
+    "webpack": true,
     "tsConfigPath": "apps/gateway/tsconfig.app.json"
   },
   "projects": {

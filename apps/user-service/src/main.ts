@@ -1,7 +1,5 @@
 import {NestFactory} from '@nestjs/core';
 import {MicroserviceOptions, Transport} from "@nestjs/microservices";
-import {ConfigService} from "@nestjs/config";
-import {IEnvironment} from "./environment.interface";
 import {AppModule} from "./app.module";
 
 async function bootstrap() {
@@ -12,14 +10,10 @@ async function bootstrap() {
             host: '0.0.0.0'
         }
     });
-    const config = app.get(ConfigService)
-    console.log(config.get<IEnvironment>('MONGO_CONNECTION_URL'))
-
-
     await app.startAllMicroservices();
 }
 
 bootstrap()
-    .then(async (app) => {
+    .then(() => {
         console.log(`user-service microservice is up`)
     });
