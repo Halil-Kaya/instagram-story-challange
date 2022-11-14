@@ -9,7 +9,7 @@ export type UserDocument = User & Document;
     versionKey: false
 })
 export class User implements IUser {
-    @Prop({type: Types.ObjectId})
+    @Prop({type: Types.ObjectId, default: Types.ObjectId})
     _id: string;
 
     @Prop({type: String, required: true})

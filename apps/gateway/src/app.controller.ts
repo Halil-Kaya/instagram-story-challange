@@ -10,7 +10,11 @@ export class AppController {
     @Get()
     async getHello() {
         console.log("istek geldi")
-        return this.client.send('create', {})
+        return this.client.send('create', {
+            fullName: 'halil kaya',
+            password: '12345678',
+            nickname: 'hlk'
+        })
             .pipe(
                 catchError((err): any => {
                     console.log(err)

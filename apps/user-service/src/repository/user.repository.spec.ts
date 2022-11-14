@@ -1,52 +1,22 @@
 import {UserRepository} from "./user.repository";
 import {Test, TestingModule} from "@nestjs/testing";
 import {getModelToken} from "@nestjs/mongoose";
-import {User} from "../model/user.model";
+import {preSave, User, UserSchema} from "../model/user.model";
+import {connect, Connection, Model} from "mongoose";
+import {MongoMemoryServer} from "mongodb-memory-server";
 
 describe('UserRepository', () => {
     let userRepository: UserRepository
+    let mongod: MongoMemoryServer;
+    let mongoConnection: Connection;
+    let mockUserModel: Model<User>;
 
-    class mockUserModel {
-        _id: string;
-        fullName: string;
-        nickname: string;
-        password: string;
-        createdAt: Date;
-
-        constructor(dto: any) {
-            this._id = dto._id
-            this.fullName = dto.fullName;
-            this.nickname = dto.nickname;
-            this.password = dto.password;
-        }
-
-        static db = []
-
-        save() {
-            if (!this._id) {
-                this._id = (mockUserModel.db.length + 1).toString();
-            }
-            if (mockUserModel.db.some(usr => usr.nickname == this.nickname)) {
-                throw new Error('Already exists error');
-            }
-            if (this.password.length < 8) {
-                throw new Error("Password's length should be more than 8");
-            }
-            if (this.password.length > 24) {
-                throw new Error("Password's length should be less than 24");
-            }
-            const dbRecordIndex = mockUserModel.db.findIndex(
-                (x) => x.nickname === this.nickname,
-            );
-            if (dbRecordIndex === -1) mockUserModel.db.push(this);
-            else mockUserModel.db[dbRecordIndex] = this;
-            return this;
-        }
-
-    }
-
-    beforeEach(async () => {
-        mockUserModel.db = []
+    beforeAll(async () => {
+        mongod = await MongoMemoryServer.create();
+        const uri = mongod.getUri();
+        mongoConnection = (await connect(uri)).connection;
+        UserSchema.pre('save', preSave);
+        mockUserModel = mongoConnection.model(User.name, UserSchema)
         const module: TestingModule = await Test.createTestingModule({
             providers: [
                 UserRepository,
@@ -59,19 +29,37 @@ describe('UserRepository', () => {
         userRepository = module.get<UserRepository>(UserRepository)
     })
 
+    afterAll(async () => {
+        await mongoConnection.dropDatabase();
+        await mongoConnection.close();
+        await mongod.stop();
+    });
+
+    afterEach(async () => {
+        const collections = mongoConnection.collections;
+        for (const key in collections) {
+            const collection = collections[key];
+            await collection.deleteMany({});
+        }
+    });
+
     it('should be defined', () => {
         expect(userRepository).toBeDefined()
     });
 
     describe('create', () => {
         it('should create user', async () => {
-            const expectedId = (mockUserModel.db.length + 1).toString();
-            const createdUser = await userRepository.create({
+            const createUserDto = {
                 fullName: 'halil kaya',
                 password: '12345678',
                 nickname: 'hlk'
-            })
-            expect(createdUser._id).toBe(expectedId)
+            }
+            const createdUser = await userRepository.create(createUserDto)
+            expect(createdUser._id).toBeDefined()
+            expect(typeof createdUser._id).toBe('string')
+            expect(createdUser.nickname).toBe(createUserDto.nickname)
+            expect(createdUser.fullName).toBe(createUserDto.fullName)
+            expect(createdUser.password).not.toBe(createUserDto.password)
         });
         it('should throw error if nickname is already taken', async () => {
             await userRepository.create({
@@ -97,7 +85,7 @@ describe('UserRepository', () => {
                     nickname: 'hlk'
                 })
             } catch (err) {
-                expect(err.message).toBe("Password's length should be more than 8")
+                expect(err._message).toBe("User validation failed")
             }
         });
         it("should password's length less than 24 ", async () => {
@@ -108,8 +96,35 @@ describe('UserRepository', () => {
                     nickname: 'hlk'
                 })
             } catch (err) {
-                expect(err.message).toBe("Password's length should be less than 24")
+                expect(err._message).toBe("User validation failed")
             }
         });
+    })
+    describe('isExist', () => {
+        it('should return true for exist user', async () => {
+
+            const createdUser = await userRepository.create({
+                fullName: 'halil kaya',
+                password: '12345678',
+                nickname: 'hlk'
+            })
+            const result = await userRepository.isExist({_id: createdUser._id})
+            expect(result).toBeTruthy()
+        });
+        it('should return false for non-exist user', async () => {
+            const result = await userRepository.isExist({_id: -1})
+            expect(result).toBeFalsy()
+        })
+    })
+    describe('getUserWithPasswordById', () => {
+        it('should return user with password field', async () => {
+            const {_id} = await userRepository.create({
+                fullName: 'halil kaya',
+                password: '12345678',
+                nickname: 'hlk'
+            })
+            const user = await userRepository.getUserWithPasswordById(_id)
+            expect(user.password).toBeDefined()
+        })
     })
 })

@@ -22,8 +22,6 @@ export class UserRepository {
     }
 
     async isExist(query: FilterQuery<UserDocument>): Promise<number> {
-        return this.userModel.count(query)
-            .limit(1)
-            .exec()
+        return this.userModel.count(query).exec()
     }
 }
