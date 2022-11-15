@@ -7,7 +7,7 @@ import {MongoMemoryServer} from "mongodb-memory-server";
 import * as bcrypt from 'bcryptjs';
 
 describe('UserRepository', () => {
-    let userRepository: UserRepository
+    let mockUserRepository: UserRepository
     let mongod: MongoMemoryServer;
     let mongoConnection: Connection;
     let mockUserModel: Model<User>;
@@ -28,7 +28,7 @@ describe('UserRepository', () => {
                 }
             ]
         }).compile()
-        userRepository = module.get<UserRepository>(UserRepository)
+        mockUserRepository = module.get<UserRepository>(UserRepository)
     })
 
     afterAll(async () => {
@@ -46,7 +46,7 @@ describe('UserRepository', () => {
     });
 
     it('should be defined', () => {
-        expect(userRepository).toBeDefined()
+        expect(mockUserRepository).toBeDefined()
     });
 
     describe('create', () => {
@@ -56,20 +56,20 @@ describe('UserRepository', () => {
                 password: '12345678',
                 nickname: 'hlk'
             }
-            const createdUser = await userRepository.create(createUserDto)
+            const createdUser = await mockUserRepository.create(createUserDto)
             expect(createdUser._id).toBeDefined()
             expect(createdUser.nickname).toBe(createUserDto.nickname)
             expect(createdUser.fullName).toBe(createUserDto.fullName)
             expect(await bcrypt.compare(createUserDto.password, createdUser.password)).toBeTruthy()
         });
         it('should throw error if nickname is already taken', async () => {
-            await userRepository.create({
+            await mockUserRepository.create({
                 fullName: 'halil kaya',
                 password: '12345678',
                 nickname: 'hlk'
             })
             try {
-                await userRepository.create({
+                await mockUserRepository.create({
                     fullName: 'halil kaya',
                     password: '12345678',
                     nickname: 'hlk'
@@ -80,7 +80,7 @@ describe('UserRepository', () => {
         });
         it("should password's length more than 8 ", async () => {
             try {
-                await userRepository.create({
+                await mockUserRepository.create({
                     fullName: 'halil kaya',
                     password: '123',
                     nickname: 'hlk#1'
@@ -91,7 +91,7 @@ describe('UserRepository', () => {
         });
         it("should password's length less than 24 ", async () => {
             try {
-                await userRepository.create({
+                await mockUserRepository.create({
                     fullName: 'halil kaya',
                     password: '1231231232132132132132131231231231232121',
                     nickname: 'hlk#2'
@@ -104,16 +104,16 @@ describe('UserRepository', () => {
     describe('isExist', () => {
         it('should return true for exist user', async () => {
 
-            const createdUser = await userRepository.create({
+            const createdUser = await mockUserRepository.create({
                 fullName: 'halil kaya',
                 password: '12345678',
                 nickname: 'hlk#3'
             })
-            const result = await userRepository.isExist({_id: createdUser._id})
+            const result = await mockUserRepository.isExist({_id: createdUser._id})
             expect(result).toBeTruthy()
         });
         it('should return false for non-exist user', async () => {
-            const result = await userRepository.isExist({_id: new Types.ObjectId()})
+            const result = await mockUserRepository.isExist({_id: new Types.ObjectId()})
             expect(result).toBeFalsy()
         })
     })
@@ -124,8 +124,8 @@ describe('UserRepository', () => {
                 password: '12345678',
                 nickname: 'hlk#4'
             }
-            const {_id} = await userRepository.create(createUserDto)
-            const user = await userRepository.getUserWithPasswordById(_id)
+            const {_id} = await mockUserRepository.create(createUserDto)
+            const user = await mockUserRepository.getUserWithPasswordById(_id)
             expect(typeof user._id).toBe('string')
             expect(await bcrypt.compare(createUserDto.password, user.password)).toBeTruthy()
         })

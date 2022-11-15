@@ -2,6 +2,7 @@ import {Injectable} from '@nestjs/common';
 import {UserRepository} from "../repository/user.repository";
 import * as UserServicePayloads from "../payload";
 import {User} from "../model/user.model";
+import {NicknameAlreadyTakenException} from "@app/exceptions";
 
 @Injectable()
 export class UserService {
@@ -11,8 +12,7 @@ export class UserService {
     async create(payload: UserServicePayloads.Create): Promise<User> {
         const isNicknameExist = await this.userRepository.isExist({nickname: payload.nickname})
         if (isNicknameExist) {
-            //TODO throw custom error
-            throw new Error()
+            throw new NicknameAlreadyTakenException()
         }
         return this.userRepository.create(payload)
     }
