@@ -81,7 +81,8 @@
     "moduleNameMapper": {
       "^@app/interfaces(|/.*)$": "<rootDir>/libs/interfaces/src/$1",
       "^@app/interceptor(|/.*)$": "<rootDir>/libs/interceptor/src/$1",
-      "^@app/interceptors(|/.*)$": "<rootDir>/libs/interceptors/src/$1"
+      "^@app/interceptors(|/.*)$": "<rootDir>/libs/interceptors/src/$1",
+      "^@app/exceptions(|/.*)$": "<rootDir>/libs/exceptions/src/$1"
     }
   }
 }

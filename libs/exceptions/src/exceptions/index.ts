@@ -1,0 +1,1 @@
+export * from './nickname-already-taken.exception'

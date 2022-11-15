@@ -35,6 +35,12 @@
       ],
       "@app/interceptors/*": [
         "libs/interceptors/src/*"
+      ],
+      "@app/exceptions": [
+        "libs/exceptions/src"
+      ],
+      "@app/exceptions/*": [
+        "libs/exceptions/src/*"
       ]
     }
   }
