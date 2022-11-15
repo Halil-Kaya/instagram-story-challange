@@ -7,7 +7,7 @@ services:
       context: ..
       dockerfile: docker/Dockerfile
 
-  gateway:
+  api-gateway:
     image: instagram-story-challenge-base-node
     ports:
       - 3050:3050

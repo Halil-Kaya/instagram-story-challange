@@ -12,6 +12,14 @@ export class UserController {
 
     @MessagePattern('create')
     async createUser(payload: UserPayloads.Create): Promise<User> {
-        return this.userService.create(payload)
+        const user = await this.userService.create({
+            nickname: (Math.random() + 1).toString(36).substring(7),
+            password: '123123123',
+            fullName: 'asdasdas'
+        })
+        console.log({user})
+        const res = await this.userService.getUserForLogin(user._id)
+        console.log({res})
+        return user
     }
 }

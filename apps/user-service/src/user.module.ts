@@ -2,7 +2,7 @@ import {Module} from '@nestjs/common';
 import {UserController} from './controller/user.controller';
 import {UserService} from './service/user.service';
 import {MongooseModule} from "@nestjs/mongoose";
-import {preSave, User, UserSchema} from "./model/user.model";
+import {postFindOne, preSave, User, UserSchema} from "./model/user.model";
 import {UserRepository} from "./repository/user.repository";
 
 @Module({
@@ -12,6 +12,7 @@ import {UserRepository} from "./repository/user.repository";
                 name: User.name,
                 useFactory: () => {
                     UserSchema.pre('save', preSave);
+                    UserSchema.post('findOne', postFindOne);
                     return UserSchema;
                 },
             },

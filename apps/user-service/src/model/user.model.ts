@@ -1,4 +1,4 @@
-import {Document, Types} from 'mongoose';
+import {Document, Schema as MongooseSchema, Types} from 'mongoose';
 import {IUser} from "@app/interfaces/user.interface";
 import {Prop, SchemaFactory, Schema} from "@nestjs/mongoose";
 import {hashSync} from 'bcryptjs';
@@ -9,7 +9,7 @@ export type UserDocument = User & Document;
     versionKey: false
 })
 export class User implements IUser {
-    @Prop({type: Types.ObjectId, default: Types.ObjectId})
+    @Prop({type: MongooseSchema.Types.ObjectId, default: Types.ObjectId})
     _id: string;
 
     @Prop({type: String, required: true})
@@ -34,4 +34,10 @@ export function preSave(next: any) {
     }
     this.password = hashSync(this.password, 12);
     next();
+}
+
+export function postFindOne(result) {
+    if (result) {
+        result._id = result._id.toString()
+    }
 }

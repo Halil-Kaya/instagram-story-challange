@@ -1,8 +1,7 @@
 import { Module } from '@nestjs/common';
-import { InterceptorsService } from './interceptors.service';
 
 @Module({
-  providers: [InterceptorsService],
-  exports: [InterceptorsService],
+  providers: [],
+  exports: [],
 })
 export class InterceptorsModule {}

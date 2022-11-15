@@ -1,9 +1,10 @@
 import {UserRepository} from "./user.repository";
 import {Test, TestingModule} from "@nestjs/testing";
 import {getModelToken} from "@nestjs/mongoose";
-import {preSave, User, UserSchema} from "../model/user.model";
-import {connect, Connection, Model} from "mongoose";
+import {postFindOne, preSave, User, UserSchema} from "../model/user.model";
+import {connect, Connection, Model, Types} from "mongoose";
 import {MongoMemoryServer} from "mongodb-memory-server";
+import * as bcrypt from 'bcryptjs';
 
 describe('UserRepository', () => {
     let userRepository: UserRepository
@@ -16,6 +17,7 @@ describe('UserRepository', () => {
         const uri = mongod.getUri();
         mongoConnection = (await connect(uri)).connection;
         UserSchema.pre('save', preSave);
+        UserSchema.post('findOne', postFindOne)
         mockUserModel = mongoConnection.model(User.name, UserSchema)
         const module: TestingModule = await Test.createTestingModule({
             providers: [
@@ -56,10 +58,9 @@ describe('UserRepository', () => {
             }
             const createdUser = await userRepository.create(createUserDto)
             expect(createdUser._id).toBeDefined()
-            expect(typeof createdUser._id).toBe('string')
             expect(createdUser.nickname).toBe(createUserDto.nickname)
             expect(createdUser.fullName).toBe(createUserDto.fullName)
-            expect(createdUser.password).not.toBe(createUserDto.password)
+            expect(await bcrypt.compare(createUserDto.password, createdUser.password)).toBeTruthy()
         });
         it('should throw error if nickname is already taken', async () => {
             await userRepository.create({
@@ -82,7 +83,7 @@ describe('UserRepository', () => {
                 await userRepository.create({
                     fullName: 'halil kaya',
                     password: '123',
-                    nickname: 'hlk'
+                    nickname: 'hlk#1'
                 })
             } catch (err) {
                 expect(err._message).toBe("User validation failed")
@@ -93,7 +94,7 @@ describe('UserRepository', () => {
                 await userRepository.create({
                     fullName: 'halil kaya',
                     password: '1231231232132132132132131231231231232121',
-                    nickname: 'hlk'
+                    nickname: 'hlk#2'
                 })
             } catch (err) {
                 expect(err._message).toBe("User validation failed")
@@ -106,25 +107,27 @@ describe('UserRepository', () => {
             const createdUser = await userRepository.create({
                 fullName: 'halil kaya',
                 password: '12345678',
-                nickname: 'hlk'
+                nickname: 'hlk#3'
             })
             const result = await userRepository.isExist({_id: createdUser._id})
             expect(result).toBeTruthy()
         });
         it('should return false for non-exist user', async () => {
-            const result = await userRepository.isExist({_id: -1})
+            const result = await userRepository.isExist({_id: new Types.ObjectId()})
             expect(result).toBeFalsy()
         })
     })
     describe('getUserWithPasswordById', () => {
         it('should return user with password field', async () => {
-            const {_id} = await userRepository.create({
+            const createUserDto = {
                 fullName: 'halil kaya',
                 password: '12345678',
-                nickname: 'hlk'
-            })
+                nickname: 'hlk#4'
+            }
+            const {_id} = await userRepository.create(createUserDto)
             const user = await userRepository.getUserWithPasswordById(_id)
-            expect(user.password).toBeDefined()
+            expect(typeof user._id).toBe('string')
+            expect(await bcrypt.compare(createUserDto.password, user.password)).toBeTruthy()
         })
     })
 })
