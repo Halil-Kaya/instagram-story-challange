@@ -17,7 +17,7 @@ export class UserService {
         return this.userRepository.create(payload)
     }
 
-    async getUserForLogin(_id: string): Promise<User> {
+    async getUserForLogin({_id}: UserServicePayloads.GetUserForLogin): Promise<User> {
         return this.userRepository.getUserWithPasswordById(_id)
     }
 }

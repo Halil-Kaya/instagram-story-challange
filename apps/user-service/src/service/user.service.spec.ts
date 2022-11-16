@@ -8,8 +8,6 @@ import {UserRepository} from "../repository/user.repository";
 import {Create} from "../payload";
 import * as bcrypt from 'bcryptjs';
 import {NicknameAlreadyTakenException} from "@app/exceptions";
-import {CustomException} from "@app/exceptions/exceptions/custom.exception";
-import {ErrorCodes} from "@app/exceptions/error-codes";
 
 describe('UserService', () => {
     let mockUserService: UserService
@@ -92,7 +90,7 @@ describe('UserService', () => {
                 password: '12345678'
             }
             const {_id} = await mockUserService.create(reqDto)
-            const user = await mockUserService.getUserForLogin(_id)
+            const user = await mockUserService.getUserForLogin({_id})
             expect(user._id).toBeDefined()
             expect(user.nickname).toBe(reqDto.nickname)
             expect(user.fullName).toBe(reqDto.fullName)

@@ -5,6 +5,7 @@ import {postFindOne, preSave, User, UserSchema} from "../model/user.model";
 import {connect, Connection, Model, Types} from "mongoose";
 import {MongoMemoryServer} from "mongodb-memory-server";
 import * as bcrypt from 'bcryptjs';
+import {NicknameAlreadyTakenException} from "@app/exceptions";
 
 describe('UserRepository', () => {
     let mockUserRepository: UserRepository
@@ -75,7 +76,7 @@ describe('UserRepository', () => {
                     nickname: 'hlk'
                 })
             } catch (err) {
-                expect(err.message).toBe('Already exists error')
+                expect(err).toBeInstanceOf(NicknameAlreadyTakenException)
             }
         });
         it("should password's length more than 8 ", async () => {

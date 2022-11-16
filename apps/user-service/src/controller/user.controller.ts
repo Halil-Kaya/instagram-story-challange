@@ -2,7 +2,7 @@ import {Controller} from '@nestjs/common';
 import {MessagePattern} from "@nestjs/microservices";
 import * as UserPayloads from "../payload";
 import {UserService} from "../service/user.service";
-import {User} from "../model/user.model";
+import {IUser} from "@app/interfaces/user.interface";
 
 @Controller()
 export class UserController {
@@ -11,15 +11,13 @@ export class UserController {
     }
 
     @MessagePattern('create')
-    async createUser(payload: UserPayloads.Create): Promise<User> {
-        const user = await this.userService.create({
-            nickname: (Math.random() + 1).toString(36).substring(7),
-            password: '123123123',
-            fullName: 'asdasdas'
-        })
-        console.log({user})
-        const res = await this.userService.getUserForLogin(user._id)
-        console.log({res})
-        return user
+    async create(payload: UserPayloads.Create): Promise<IUser> {
+        return this.userService.create(payload)
     }
+
+    @MessagePattern('get-user-for-login')
+    getUserForLogin(payload: UserPayloads.GetUserForLogin): Promise<IUser> {
+        return this.userService.getUserForLogin(payload)
+    }
+
 }
