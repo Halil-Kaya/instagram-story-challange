@@ -1,15 +1,17 @@
-import {Controller, Get, Inject} from '@nestjs/common';
+import {Body, Controller, Inject, Post} from "@nestjs/common";
 import {ClientProxy} from "@nestjs/microservices";
-import {catchError} from "rxjs";
+import {UserCreateDto} from "./dto";
+import {catchError, timeout} from "rxjs";
+import {GeneralServerException} from "@app/exceptions/exceptions/general-server.exception";
 
-@Controller()
-export class AppController {
+@Controller('user')
+export class UserController {
     constructor(@Inject('USER_SERVICE') private client: ClientProxy) {
     }
 
-    @Get()
-    async getHello() {
-        console.log("istek geldi")
+    @Post('create')
+    create(@Body() dto: UserCreateDto) {
+        console.log("req geldi")
         return this.client.send('create', {
             fullName: 'halil kaya',
             password: '12345678',
@@ -21,4 +23,5 @@ export class AppController {
                 })
             )
     }
+
 }
