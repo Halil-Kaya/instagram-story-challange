@@ -5,7 +5,7 @@ import {UserService} from "./user.service";
 import {Test, TestingModule} from "@nestjs/testing";
 import {getModelToken} from "@nestjs/mongoose";
 import {UserRepository} from "../repository/user.repository";
-import {Create} from "../payload";
+import {UserServicePayloads} from "../payload";
 import * as bcrypt from 'bcryptjs';
 import {NicknameAlreadyTakenException} from "@app/exceptions";
 
@@ -55,7 +55,7 @@ describe('UserService', () => {
 
     describe('create', () => {
         it('should create user', async () => {
-            const reqDto: Create = {
+            const reqDto: UserServicePayloads.Create = {
                 fullName: 'test-user',
                 nickname: 'test-nickname',
                 password: '12345678'
@@ -68,7 +68,7 @@ describe('UserService', () => {
         })
 
         it('should throw NicknameAlreadyTakenException', async () => {
-            const reqDto: Create = {
+            const reqDto: UserServicePayloads.Create = {
                 fullName: 'test-user',
                 nickname: 'test-nickname',
                 password: '12345678'
@@ -84,7 +84,7 @@ describe('UserService', () => {
 
     describe('getUserForLogin', () => {
         it('should get user with password field', async () => {
-            const reqDto: Create = {
+            const reqDto: UserServicePayloads.Create = {
                 fullName: 'test-user',
                 nickname: 'test-nickname',
                 password: '12345678'

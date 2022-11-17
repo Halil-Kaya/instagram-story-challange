@@ -1,6 +1,6 @@
 import {Injectable} from '@nestjs/common';
 import {UserRepository} from "../repository/user.repository";
-import * as UserServicePayloads from "../payload";
+import {UserServicePayloads} from "../payload";
 import {User} from "../model/user.model";
 import {NicknameAlreadyTakenException} from "@app/exceptions";
 
