@@ -1,2 +1,2 @@
-export * from './interceptors.module';
-export * from './interceptors.service';
+export * from './rpc-logger.interceptor'
+export * from './transform.interceptor'
