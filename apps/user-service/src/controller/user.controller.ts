@@ -12,7 +12,6 @@ export class UserController {
 
     @MessagePattern('create')
     async create(payload: UserServicePayloads.Create): Promise<IUser> {
-        console.log({payload})
         return this.userService.create(payload)
     }
 
@@ -20,5 +19,4 @@ export class UserController {
     getUserForLogin(payload: UserServicePayloads.GetUserForLogin): Promise<IUser> {
         return this.userService.getUserForLogin(payload)
     }
-
 }
