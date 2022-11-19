@@ -1,9 +1,13 @@
-import {Controller} from '@nestjs/common';
+import {Controller, UseFilters, UseInterceptors} from '@nestjs/common';
 import {MessagePattern} from "@nestjs/microservices";
 import {UserService} from "../service/user.service";
 import {IUser} from "@app/interfaces/user.interface";
 import {UserServicePayloads} from "../payload";
+import {RpcLoggerInterceptor} from "@app/interceptors/rpc-logger.interceptor";
+import {RpcExceptionFilter} from "@app/filters/rpc-exception.filter";
 
+@UseInterceptors(RpcLoggerInterceptor)
+@UseFilters(RpcExceptionFilter)
 @Controller()
 export class UserController {
 
