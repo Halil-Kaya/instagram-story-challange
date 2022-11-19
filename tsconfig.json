@@ -41,6 +41,12 @@
       ],
       "@app/exceptions/*": [
         "libs/exceptions/src/*"
+      ],
+      "@app/filters": [
+        "libs/filters/src"
+      ],
+      "@app/filters/*": [
+        "libs/filters/src/*"
       ]
     }
   }

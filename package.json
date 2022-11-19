@@ -85,7 +85,8 @@
       "^@app/interfaces(|/.*)$": "<rootDir>/libs/interfaces/src/$1",
       "^@app/interceptor(|/.*)$": "<rootDir>/libs/interceptor/src/$1",
       "^@app/interceptors(|/.*)$": "<rootDir>/libs/interceptors/src/$1",
-      "^@app/exceptions(|/.*)$": "<rootDir>/libs/exceptions/src/$1"
+      "^@app/exceptions(|/.*)$": "<rootDir>/libs/exceptions/src/$1",
+      "^@app/filters(|/.*)$": "<rootDir>/libs/filters/src/$1"
     }
   }
 }
