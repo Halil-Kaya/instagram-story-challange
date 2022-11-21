@@ -71,6 +71,15 @@
       "compilerOptions": {
         "tsConfigPath": "apps/auth-service/tsconfig.app.json"
       }
+    },
+    "payloads": {
+      "type": "library",
+      "root": "libs/payloads",
+      "entryFile": "index",
+      "sourceRoot": "libs/payloads/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/payloads/tsconfig.lib.json"
+      }
     }
   }
 }

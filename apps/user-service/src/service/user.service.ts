@@ -1,8 +1,8 @@
 import {Injectable} from '@nestjs/common';
 import {UserRepository} from "../repository/user.repository";
-import {UserServicePayloads} from "../payload";
 import {User} from "../model/user.model";
 import {NicknameAlreadyTakenException} from "@app/exceptions";
+import {UserServicePayloads} from "@app/payloads"
 
 @Injectable()
 export class UserService {
