@@ -33,6 +33,19 @@ services:
     depends_on:
       - mongo
 
+  auth-service:
+    image: instagram-story-challenge-base-node
+    networks:
+      - app-net
+    environment:
+      - APP_NAME=auth-service
+    command: './docker/init.sh'
+    volumes:
+      - './../apps/auth-service:/project/apps/auth-service:ro'
+      - './../libs:/project/libs:ro'
+    depends_on:
+      - redis
+
   mongo:
     image: mongo
     ports:

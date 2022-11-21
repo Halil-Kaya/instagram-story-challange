@@ -13,4 +13,7 @@ async function bootstrap() {
     await app.startAllMicroservices();
 }
 
-bootstrap();
+bootstrap()
+    .then(() => {
+        console.log(`auth-service microservice is up`)
+    });
