@@ -10,15 +10,16 @@ export class RpcLoggerInterceptor implements NestInterceptor {
         const method = context.getHandler().name;
         const contextType = context.getType();
         const controllerName = context.getClass().name;
+        const reqId = (Math.random() + 1).toString(36).substring(2);
         this.logger.log(
-            `REQ [${contextType}]:[${controllerName}]:[${method}]:-> ${JSON.stringify(
+            `REQ:[${reqId}] [${contextType}]:[${controllerName}]:[${method}]:-> ${JSON.stringify(
                 reqBody,
             )}`,
         );
         return next.handle().pipe(
             tap((data) => {
                 this.logger.log(
-                    `RES [${contextType}]:[${controllerName}]:[${method}]:-> ${JSON.stringify(
+                    `RES:[${reqId}] [${contextType}]:[${controllerName}]:[${method}]:-> ${JSON.stringify(
                         data,
                     )}`,
                 );

@@ -32,7 +32,8 @@ export class TransformInterceptor implements NestInterceptor {
         const {method, url, body, headers, params, status} = context
             .switchToHttp()
             .getRequest();
-        this.logger.log(`REQ [${method} ${url}]:-> ${JSON.stringify(body)}`);
+        const reqId = (Math.random() + 1).toString(36).substring(2);
+        this.logger.log(`REQ:[${reqId}] [${method} ${url}]:-> ${JSON.stringify(body)}`);
         return next.handle().pipe(
             map((data) => {
                 const res = {
@@ -44,7 +45,7 @@ export class TransformInterceptor implements NestInterceptor {
                     },
                     result: data,
                 };
-                this.logger.log(`RES [${method} ${url}] :-> ${JSON.stringify(res)}`);
+                this.logger.log(`RES:[${reqId}] [${method} ${url}] :-> ${JSON.stringify(res)}`);
                 return res;
             }),
         );
