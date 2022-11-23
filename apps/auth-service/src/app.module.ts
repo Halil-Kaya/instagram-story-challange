@@ -8,7 +8,8 @@ import {ConfigModule} from "@nestjs/config";
             envFilePath: 'environments/auth-service.env',
             isGlobal: true
         }),
-        AuthModule],
+        AuthModule
+    ],
     controllers: [],
     providers: [],
 })
