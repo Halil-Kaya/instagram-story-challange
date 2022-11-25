@@ -3,14 +3,21 @@ import {createUser} from "../../common/user.helper";
 import {IUser} from "@app/interfaces/user.interface";
 import {MetaInterface} from "@app/interceptors";
 import {ErrorCodes} from "@app/exceptions/error-codes";
-import {closeMongoDb, resetMongoDb} from "../../common/mongo.helper";
+import {closeMongoDb, connectMongoDb} from "../../common/mongo.helper";
+import {closeRedis, connectRedis} from "../../common/redis.helper";
 
 afterAll(async () => {
-    await closeMongoDb()
+    await Promise.all([
+        closeMongoDb(),
+        closeRedis()
+    ])
 })
 
 beforeEach(async () => {
-    await resetMongoDb()
+    await Promise.all([
+        connectRedis(),
+        connectMongoDb()
+    ])
 })
 
 it('should create user', async () => {

@@ -2,7 +2,11 @@ import mongoose from "mongoose";
 import {config} from "../config";
 
 export const mongoDb = mongoose.connection;
-mongoose.connect(config.mongoConnectionUrl);
+
+export const connectMongoDb = async (): Promise<void> => {
+    await mongoose.connect(config.mongoConnectionUrl);
+    await resetMongoDb()
+}
 
 export const resetMongoDb = async (): Promise<void> => {
     await Promise.all([

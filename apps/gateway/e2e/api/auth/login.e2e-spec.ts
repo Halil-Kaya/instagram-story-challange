@@ -2,16 +2,22 @@ import {UserCreateDto} from "../../../src/modules/user/dto";
 import {createUser} from "../../common/user.helper";
 import {login} from "../../common/auth.helper";
 import {LoginDto} from "../../../src/modules/auth/dto/login.dto";
-import {closeMongoDb, resetMongoDb} from "../../common/mongo.helper";
-import {resetCache} from "../../common/redis.helper";
+import {closeMongoDb, connectMongoDb} from "../../common/mongo.helper";
+import {closeRedis, connectRedis, getRedis} from "../../common/redis.helper";
+import {IUser} from "@app/interfaces/user.interface";
 
 afterAll(async () => {
-    await closeMongoDb()
+    await Promise.all([
+        closeMongoDb(),
+        closeRedis()
+    ])
 })
 
 beforeEach(async () => {
-    await resetMongoDb()
-    await resetCache()
+    await Promise.all([
+        connectRedis(),
+        connectMongoDb()
+    ])
 })
 
 it('should create user', async () => {
@@ -20,7 +26,8 @@ it('should create user', async () => {
         nickname: Math.random().toString(36).slice(2, 16),
         password: 'passw@rd'
     }
-    await createUser(reqDto)
+    const result = await createUser(reqDto)
+    const createdUser = <IUser>result.data.result
     const loginDto: LoginDto = {
         nickname: reqDto.nickname,
         password: reqDto.password
@@ -28,4 +35,11 @@ it('should create user', async () => {
     const {data} = await login(loginDto)
     const {token} = data.result
     expect(token).toBeDefined()
+
+    const redis = getRedis()
+    const redisUser = await redis.hGetAll(`user:${createdUser._id}`)
+    expect(createdUser._id).toBe(redisUser._id)
+    expect(createdUser.fullName).toBe(redisUser.fullName)
+    expect(createdUser.nickname).toBe(redisUser.nickname)
+    expect(createdUser.createdAt).toBe(redisUser.createdAt)
 });
