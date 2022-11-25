@@ -4,7 +4,9 @@ import {ConfigService} from "@nestjs/config";
 import {IEnvironment} from "./environment.interface";
 import {AuthController} from "./controller/auth.controller";
 import {AuthService} from "./service/auth.service";
-import {AuthCacheRepository} from "./repository/auth-cache.repository";
+import {AuthCacheService} from "./repository/auth-cache.service";
+import {ClientsModule, Transport} from "@nestjs/microservices";
+import {RedisModule} from "@nestjs-modules/ioredis";
 
 @Module({
     imports: [
@@ -18,9 +20,28 @@ import {AuthCacheRepository} from "./repository/auth-cache.repository";
             }),
             inject: [ConfigService]
         }),
+        ClientsModule.register([
+            {
+                name: 'USER_SERVICE',
+                transport: Transport.TCP,
+                options: {
+                    host: 'user-service'
+                }
+            },
+        ]),
+        RedisModule.forRootAsync({
+            imports: [],
+            useFactory: async (configService: ConfigService<IEnvironment>) => ({
+                config: {
+                    host: configService.get('REDIS_HOST'),
+                    port: configService.get('REDIS_PORT')
+                }
+            }),
+            inject: [ConfigService]
+        })
     ],
     controllers: [AuthController],
-    providers: [AuthService, AuthCacheRepository],
+    providers: [AuthService, AuthCacheService],
 })
 export class AuthModule {
 }
