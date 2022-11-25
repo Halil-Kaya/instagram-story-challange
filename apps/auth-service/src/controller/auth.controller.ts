@@ -5,6 +5,7 @@ import {LoginAck} from "@app/interfaces/login.ack.interface";
 import {RpcLoggerInterceptor} from "@app/interceptors";
 import {RpcExceptionFilter} from "@app/filters";
 import {AuthServicePatterns} from "@app/payloads";
+import {AuthServicePayloads} from "@app/payloads"
 
 @UseInterceptors(RpcLoggerInterceptor)
 @UseFilters(RpcExceptionFilter)
@@ -14,7 +15,12 @@ export class AuthController {
     }
 
     @MessagePattern(AuthServicePatterns.LOGIN)
-    async login(payload: any): Promise<LoginAck> {
+    async login(payload: AuthServicePayloads.LoginPayload): Promise<LoginAck> {
         return this.authService.login(payload)
+    }
+
+    @MessagePattern(AuthServicePatterns.LOGOUT)
+    async logout(payload: AuthServicePayloads.LogoutPayload): Promise<void> {
+        return this.authService.logout(payload)
     }
 }

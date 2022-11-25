@@ -17,4 +17,9 @@ export class AuthCacheService {
         await this.redis.hset(key, user)
         await this.redis.expire(key, this.configService.get('REDIS_USER_EXPIRE'))
     }
+
+    async removeUser(_id: string): Promise<void> {
+        const key = `user:${_id}`
+        await this.redis.del(key)
+    }
 }

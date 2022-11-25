@@ -12,5 +12,6 @@ export enum UserServicePatterns {
 }
 
 export enum AuthServicePatterns {
-    LOGIN = "login"
+    LOGIN = "login",
+    LOGOUT = "logout"
 }

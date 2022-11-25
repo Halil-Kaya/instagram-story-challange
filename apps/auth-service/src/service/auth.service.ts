@@ -38,6 +38,10 @@ export class AuthService {
         }
     }
 
+    async logout({_id}: AuthServicePayloads.LogoutPayload): Promise<void> {
+        await this.authCacheRepository.removeUser(_id)
+    }
+
     private getPayload(user: IUser): Pick<IUser, '_id'> {
         return {
             _id: user._id
