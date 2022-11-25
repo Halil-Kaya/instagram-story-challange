@@ -20,7 +20,7 @@ beforeEach(async () => {
     ])
 })
 
-it('should create user', async () => {
+it('should login user', async () => {
     const reqDto: UserCreateDto = {
         fullName: '#test-user',
         nickname: Math.random().toString(36).slice(2, 16),
