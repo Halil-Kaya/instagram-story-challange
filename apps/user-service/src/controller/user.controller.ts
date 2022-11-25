@@ -4,7 +4,7 @@ import {UserService} from "../service/user.service";
 import {IUser} from "@app/interfaces/user.interface";
 import {RpcLoggerInterceptor} from "@app/interceptors/rpc-logger.interceptor";
 import {RpcExceptionFilter} from "@app/filters/rpc-exception.filter";
-import {UserServicePayloads} from "@app/payloads"
+import {UserServicePatterns, UserServicePayloads} from "@app/payloads"
 
 @UseInterceptors(RpcLoggerInterceptor)
 @UseFilters(RpcExceptionFilter)
@@ -14,12 +14,12 @@ export class UserController {
     constructor(private readonly userService: UserService) {
     }
 
-    @MessagePattern('create')
+    @MessagePattern(UserServicePatterns.CREATE)
     async create(payload: UserServicePayloads.Create): Promise<IUser> {
         return this.userService.create(payload)
     }
 
-    @MessagePattern('get-user-for-login')
+    @MessagePattern(UserServicePatterns.GET_USER_FOR_LOGIN)
     getUserForLogin(payload: UserServicePayloads.GetUserForLogin): Promise<IUser> {
         return this.userService.getUserForLogin(payload)
     }
