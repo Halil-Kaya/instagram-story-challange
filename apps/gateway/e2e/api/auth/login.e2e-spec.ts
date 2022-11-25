@@ -5,6 +5,7 @@ import {LoginDto} from "../../../src/modules/auth/dto/login.dto";
 import {closeMongoDb, connectMongoDb} from "../../common/mongo.helper";
 import {closeRedis, connectRedis, getRedis} from "../../common/redis.helper";
 import {IUser} from "@app/interfaces/user.interface";
+import {config} from "../../config";
 
 afterAll(async () => {
     await Promise.all([
@@ -37,9 +38,12 @@ it('should login user', async () => {
     expect(token).toBeDefined()
 
     const redis = getRedis()
-    const redisUser = await redis.hGetAll(`user:${createdUser._id}`)
+    const key = `user:${createdUser._id}`
+    const redisUser = await redis.hGetAll(key)
     expect(createdUser._id).toBe(redisUser._id)
     expect(createdUser.fullName).toBe(redisUser.fullName)
     expect(createdUser.nickname).toBe(redisUser.nickname)
     expect(createdUser.createdAt).toBe(redisUser.createdAt)
+    const ttlTime = await redis.ttl(key)
+    expect(ttlTime).toBeGreaterThan(config.redisUserExpireTime - 10)
 });
