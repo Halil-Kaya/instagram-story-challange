@@ -5,3 +5,12 @@ export {
     UserServicePayloads,
     AuthServicePayloads
 }
+
+export enum UserServicePatterns {
+    CREATE = "create",
+    GET_USER_FOR_LOGIN = "get-user-for-login"
+}
+
+export enum AuthServicePatterns {
+    LOGIN = "login"
+}
