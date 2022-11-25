@@ -3,6 +3,15 @@ import {createUser} from "../../common/user.helper";
 import {IUser} from "@app/interfaces/user.interface";
 import {MetaInterface} from "@app/interceptors";
 import {ErrorCodes} from "@app/exceptions/error-codes";
+import {closeMongoDb, resetMongoDb} from "../../common/mongo.helper";
+
+afterAll(async () => {
+    await closeMongoDb()
+})
+
+beforeEach(async () => {
+    await resetMongoDb()
+})
 
 it('should create user', async () => {
     const reqDto: UserCreateDto = {
