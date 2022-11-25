@@ -5,7 +5,7 @@ import {UserService} from "./user.service";
 import {Test, TestingModule} from "@nestjs/testing";
 import {getModelToken} from "@nestjs/mongoose";
 import {UserRepository} from "../repository/user.repository";
-import {UserServicePayloads} from "../payload";
+import {UserServicePayloads} from "@app/payloads"
 import * as bcrypt from 'bcryptjs';
 import {NicknameAlreadyTakenException} from "@app/exceptions";
 
@@ -89,8 +89,8 @@ describe('UserService', () => {
                 nickname: 'test-nickname',
                 password: '12345678'
             }
-            const {_id} = await mockUserService.create(reqDto)
-            const user = await mockUserService.getUserForLogin({_id})
+            const {nickname} = await mockUserService.create(reqDto)
+            const user = await mockUserService.getUserForLogin({nickname})
             expect(user._id).toBeDefined()
             expect(user.nickname).toBe(reqDto.nickname)
             expect(user.fullName).toBe(reqDto.fullName)

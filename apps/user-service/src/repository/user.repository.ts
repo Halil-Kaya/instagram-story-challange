@@ -14,8 +14,8 @@ export class UserRepository {
         return user.save()
     }
 
-    async getUserWithPasswordById(_id: string): Promise<User> {
-        return this.userModel.findById(_id)
+    async getUserWithPasswordByNickname(nickname: string): Promise<User> {
+        return this.userModel.findOne({nickname})
             .select('+password')
             .lean()
             .exec()

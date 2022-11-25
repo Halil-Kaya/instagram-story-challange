@@ -89,7 +89,7 @@ describe('UserController', () => {
             const mock = await jest.spyOn(mockUserService, 'getUserForLogin')
             mock.mockImplementation(() => Promise.resolve(mockResult))
 
-            const result = await mockUserController.getUserForLogin({_id: mockResult._id})
+            const result = await mockUserController.getUserForLogin({nickname: mockResult._id})
             expect(result.password).toBeDefined()
         });
     })

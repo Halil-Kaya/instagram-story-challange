@@ -125,8 +125,8 @@ describe('UserRepository', () => {
                 password: '12345678',
                 nickname: 'hlk#4'
             }
-            const {_id} = await mockUserRepository.create(createUserDto)
-            const user = await mockUserRepository.getUserWithPasswordById(_id)
+            const {nickname} = await mockUserRepository.create(createUserDto)
+            const user = await mockUserRepository.getUserWithPasswordByNickname(nickname)
             expect(typeof user._id).toBe('string')
             expect(await bcrypt.compare(createUserDto.password, user.password)).toBeTruthy()
         })
