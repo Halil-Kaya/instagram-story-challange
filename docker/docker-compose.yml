@@ -19,6 +19,7 @@ services:
     volumes:
       - './../apps/gateway:/project/apps/gateway:ro'
       - './../libs:/project/libs:ro'
+      - './../environments/gateway.env:/project/environments/gateway.env:ro'
 
   user-service:
     image: instagram-story-challenge-base-node
@@ -30,6 +31,7 @@ services:
     volumes:
       - './../apps/user-service:/project/apps/user-service:ro'
       - './../libs:/project/libs:ro'
+      - './../environments/user-service.env:/project/environments/user-service.env:ro'
     depends_on:
       - mongo
 
@@ -43,8 +45,21 @@ services:
     volumes:
       - './../apps/auth-service:/project/apps/auth-service:ro'
       - './../libs:/project/libs:ro'
+      - './../environments/auth-service.env:/project/environments/auth-service.env:ro'
     depends_on:
       - redis
+
+  story-service:
+    image: instagram-story-challenge-base-node
+    networks:
+      - app-net
+    environment:
+      - APP_NAME=story-service
+    command: './docker/init.sh'
+    volumes:
+      - './../apps/story-service:/project/apps/story-service:ro'
+      - './../libs:/project/libs:ro'
+      - './../environments/story-service.env:/project/environments/story-service.env:ro'
 
   mongo:
     image: mongo
