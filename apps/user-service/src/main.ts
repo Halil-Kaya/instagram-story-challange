@@ -1,6 +1,7 @@
 import {NestFactory} from '@nestjs/core';
 import {MicroserviceOptions, Transport} from "@nestjs/microservices";
 import {AppModule} from "./app.module";
+import {ValidationPipe} from "@nestjs/common";
 
 async function bootstrap() {
     const app = await NestFactory.create(AppModule);
@@ -10,6 +11,11 @@ async function bootstrap() {
             host: '0.0.0.0'
         }
     });
+    app.useGlobalPipes(new ValidationPipe({
+        forbidNonWhitelisted: true,
+        whitelist: true,
+        transform: true,
+    }))
     await app.startAllMicroservices();
 }
 
