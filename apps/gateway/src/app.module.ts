@@ -1,13 +1,25 @@
 import {Module} from '@nestjs/common';
 import {UserModule} from "./modules/user/user.module";
 import {AuthModule} from "./modules/auth/auth.module";
-import {ConfigModule} from "@nestjs/config";
+import {ConfigModule, ConfigService} from "@nestjs/config";
+import {RedisModule} from "@nestjs-modules/ioredis";
+import {IEnvironment} from "./environment.interface";
 
 @Module({
     imports: [
         ConfigModule.forRoot({
             envFilePath: 'environments/gateway.env',
             isGlobal: true
+        }),
+        RedisModule.forRootAsync({
+            imports: [],
+            useFactory: async (configService: ConfigService<IEnvironment>) => ({
+                config: {
+                    host: configService.get('REDIS_HOST'),
+                    port: configService.get('REDIS_PORT')
+                }
+            }),
+            inject: [ConfigService]
         }),
         UserModule,
         AuthModule
