@@ -80,6 +80,15 @@
       "compilerOptions": {
         "tsConfigPath": "libs/payloads/tsconfig.lib.json"
       }
+    },
+    "story-service": {
+      "type": "application",
+      "root": "apps/story-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/story-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/story-service/tsconfig.app.json"
+      }
     }
   }
 }
