@@ -9,3 +9,11 @@ const uri = baseUri + "auth/"
 export const login = (dto: LoginDto): Promise<AxiosResponse<Response<LoginAck>>> => {
     return axios.post(uri + 'login', dto)
 }
+
+export const logout = async (token: string): Promise<void> => {
+    return axios.post(uri + 'logout', {}, {
+        headers: {
+            Authorization: `Bearer ${token}`,
+        },
+    })
+}
