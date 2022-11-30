@@ -4,6 +4,7 @@ import {AuthModule} from "./modules/auth/auth.module";
 import {ConfigModule, ConfigService} from "@nestjs/config";
 import {RedisModule} from "@nestjs-modules/ioredis";
 import {IEnvironment} from "./environment.interface";
+import {StoryModule} from "./modules/story/story.module";
 
 @Module({
     imports: [
@@ -22,7 +23,8 @@ import {IEnvironment} from "./environment.interface";
             inject: [ConfigService]
         }),
         UserModule,
-        AuthModule
+        AuthModule,
+        StoryModule
     ],
     controllers: [],
     providers: [],
