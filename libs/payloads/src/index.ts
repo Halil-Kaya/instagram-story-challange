@@ -1,9 +1,11 @@
 import * as UserServicePayloads from './user-service'
 import * as AuthServicePayloads from './auth-service'
+import * as StoryServicePayloads from './story-service'
 
 export {
     UserServicePayloads,
-    AuthServicePayloads
+    AuthServicePayloads,
+    StoryServicePayloads
 }
 
 export enum UserServicePatterns {
@@ -14,4 +16,8 @@ export enum UserServicePatterns {
 export enum AuthServicePatterns {
     LOGIN = "login",
     LOGOUT = "logout"
+}
+
+export enum StoryServicePatterns {
+    CREATE = 'create'
 }
