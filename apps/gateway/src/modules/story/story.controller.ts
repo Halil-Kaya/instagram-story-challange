@@ -5,7 +5,7 @@ import {IStory} from "@app/interfaces";
 import {StoryServicePayloads, StoryServicePatterns, Services} from "@app/payloads";
 import {timeout} from "rxjs";
 
-@Controller()
+@Controller('story')
 export class StoryController {
     constructor(@Inject(Services.STORY_SERVICE) private storyServiceClient: ClientProxy) {
     }
