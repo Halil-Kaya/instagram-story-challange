@@ -21,3 +21,9 @@ export enum AuthServicePatterns {
 export enum StoryServicePatterns {
     CREATE = 'create'
 }
+
+export enum Services {
+    AUTH_SERVICE = 'AUTH_SERVICE',
+    STORY_SERVICE = 'STORY_SERVICE',
+    USER_SERVICE = 'USER_SERVICE'
+}

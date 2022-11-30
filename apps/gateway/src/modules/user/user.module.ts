@@ -1,12 +1,13 @@
 import {Module} from "@nestjs/common";
 import {UserController} from "./user.controller";
 import {ClientsModule, Transport} from "@nestjs/microservices";
+import {Services} from "@app/payloads";
 
 @Module({
     imports: [
         ClientsModule.register([
             {
-                name: 'USER_SERVICE',
+                name: Services.USER_SERVICE,
                 transport: Transport.TCP,
                 options: {
                     host: 'user-service'
