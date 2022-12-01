@@ -7,6 +7,7 @@ import {LoginAck} from "@app/interfaces/login.ack.interface";
 import {AuthServicePayloads} from "@app/payloads"
 import {CurrentUser} from "../../core/decorator";
 import {JWTGuard} from "../../core/guard";
+import {IUser} from "@app/interfaces";
 
 @Controller('auth')
 export class AuthController {
@@ -21,7 +22,7 @@ export class AuthController {
 
     @UseGuards(JWTGuard)
     @Post('logout')
-    logout(@CurrentUser() user) {
+    logout(@CurrentUser() user: IUser) {
         return this.authServiceClient.emit<void, AuthServicePayloads.LogoutPayload>(AuthServicePatterns.LOGOUT, {
             _id: user._id
         }).pipe(timeout(5000))
