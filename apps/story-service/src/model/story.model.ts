@@ -6,7 +6,7 @@ export class Story implements IStory {
     @PrimaryGeneratedColumn({
         type: 'bigint'
     })
-    id: number;
+    id: string;
 
     @Column({
         nullable: false
@@ -17,6 +17,11 @@ export class Story implements IStory {
         nullable: false
     })
     content: string;
+
+    @Column({
+        nullable: false
+    })
+    userId: string;
 
     @Column({
         type: 'date',
