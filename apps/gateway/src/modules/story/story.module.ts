@@ -2,6 +2,7 @@ import {Module} from "@nestjs/common";
 import {StoryController} from "./story.controller";
 import {ClientsModule, Transport} from "@nestjs/microservices";
 import {Services} from "@app/payloads";
+import {JWTStrategy} from "../../core/strategy";
 
 @Module({
     imports: [
@@ -16,7 +17,7 @@ import {Services} from "@app/payloads";
         ])
     ],
     controllers: [StoryController],
-    providers: []
+    providers: [JWTStrategy]
 })
 export class StoryModule {
 }
