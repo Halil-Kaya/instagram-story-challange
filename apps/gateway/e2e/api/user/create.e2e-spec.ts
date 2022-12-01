@@ -3,8 +3,8 @@ import {createUser} from "../../common/user.helper";
 import {IUser} from "@app/interfaces/user.interface";
 import {MetaInterface} from "@app/interceptors";
 import {ErrorCodes} from "@app/exceptions/error-codes";
-import {closeMongoDb, connectMongoDb} from "../../common/mongo.helper";
-import {closeRedis, connectRedis} from "../../common/redis.helper";
+import {closeMongoDb, connectMongoDb} from "../../common/db/mongo.helper";
+import {closeRedis, connectRedis} from "../../common/db/redis.helper";
 
 afterAll(async () => {
     await Promise.all([

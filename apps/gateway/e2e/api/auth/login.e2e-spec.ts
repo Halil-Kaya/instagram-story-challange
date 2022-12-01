@@ -2,8 +2,8 @@ import {UserCreateDto} from "../../../src/modules/user/dto";
 import {createUser} from "../../common/user.helper";
 import {login} from "../../common/auth.helper";
 import {LoginDto} from "../../../src/modules/auth/dto/login.dto";
-import {closeMongoDb, connectMongoDb} from "../../common/mongo.helper";
-import {closeRedis, connectRedis, getRedis} from "../../common/redis.helper";
+import {closeMongoDb, connectMongoDb} from "../../common/db/mongo.helper";
+import {closeRedis, connectRedis, getRedis} from "../../common/db/redis.helper";
 import {IUser} from "@app/interfaces/user.interface";
 import {config} from "../../config";
 
