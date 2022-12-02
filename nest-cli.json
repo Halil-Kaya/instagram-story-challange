@@ -89,6 +89,15 @@
       "compilerOptions": {
         "tsConfigPath": "apps/story-service/tsconfig.app.json"
       }
+    },
+    "queue-service": {
+      "type": "application",
+      "root": "apps/queue-service",
+      "entryFile": "main",
+      "sourceRoot": "apps/queue-service/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/queue-service/tsconfig.app.json"
+      }
     }
   }
 }
