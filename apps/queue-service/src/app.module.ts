@@ -1,0 +1,16 @@
+import {Module} from "@nestjs/common";
+import {ConfigModule} from "@nestjs/config";
+
+@Module({
+    imports: [
+        ConfigModule.forRoot({
+            envFilePath: 'environments/queue-service.env',
+            isGlobal: true
+        }),
+    ],
+    controllers: [],
+    providers: [],
+})
+export class AppModule {
+
+}

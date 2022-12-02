@@ -65,6 +65,20 @@ services:
     depends_on:
       - postgresql
 
+  queue-service:
+    image: instagram-story-challenge-base-node
+    networks:
+      - app-net
+    environment:
+      - APP_NAME=queue-service
+    command: './docker/init.sh'
+    volumes:
+      - './../apps/queue-service:/project/apps/queue-service:ro'
+      - './../libs:/project/libs:ro'
+      - './../environments/queue-service.env:/project/environments/queue-service.env:ro'
+    depends_on:
+      - redis
+
   mongo:
     image: mongo
     ports:
