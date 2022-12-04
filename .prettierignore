@@ -1,0 +1,4 @@
+/dist
+.prettierrc
+/node_modules
+*.json
