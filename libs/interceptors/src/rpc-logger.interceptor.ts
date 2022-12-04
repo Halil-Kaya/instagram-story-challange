@@ -1,5 +1,5 @@
-import {CallHandler, ExecutionContext, Injectable, Logger, NestInterceptor} from "@nestjs/common";
-import {Observable, tap} from "rxjs";
+import { CallHandler, ExecutionContext, Injectable, Logger, NestInterceptor } from '@nestjs/common';
+import { Observable, tap } from 'rxjs';
 
 @Injectable()
 export class RpcLoggerInterceptor implements NestInterceptor {
@@ -12,16 +12,12 @@ export class RpcLoggerInterceptor implements NestInterceptor {
         const controllerName = context.getClass().name;
         const reqId = (Math.random() + 1).toString(36).substring(2);
         this.logger.log(
-            `REQ:[${reqId}] [${contextType}]:[${controllerName}]:[${method}]:-> ${JSON.stringify(
-                reqBody,
-            )}`,
+            `REQ:[${reqId}] [${contextType}]:[${controllerName}]:[${method}]:-> ${JSON.stringify(reqBody)}`,
         );
         return next.handle().pipe(
             tap((data) => {
                 this.logger.log(
-                    `RES:[${reqId}] [${contextType}]:[${controllerName}]:[${method}]:-> ${JSON.stringify(
-                        data,
-                    )}`,
+                    `RES:[${reqId}] [${contextType}]:[${controllerName}]:[${method}]:-> ${JSON.stringify(data)}`,
                 );
             }),
         );

@@ -1,15 +1,15 @@
-import {Module} from "@nestjs/common";
-import {StoryModule} from "./story.module";
-import {TypeOrmModule} from "@nestjs/typeorm";
-import {ConfigModule, ConfigService} from "@nestjs/config";
-import {IEnvironment} from "./environment.interface";
-import {Story} from "./model/story.model";
+import { Module } from '@nestjs/common';
+import { StoryModule } from './story.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { IEnvironment } from './environment.interface';
+import { Story } from './model/story.model';
 
 @Module({
     imports: [
         ConfigModule.forRoot({
             envFilePath: 'environments/story-service.env',
-            isGlobal: true
+            isGlobal: true,
         }),
         TypeOrmModule.forRootAsync({
             imports: [ConfigModule],
@@ -25,10 +25,9 @@ import {Story} from "./model/story.model";
             }),
             inject: [ConfigService],
         }),
-        StoryModule],
+        StoryModule,
+    ],
     controllers: [],
     providers: [],
 })
-export class AppModule {
-
-}
+export class AppModule {}

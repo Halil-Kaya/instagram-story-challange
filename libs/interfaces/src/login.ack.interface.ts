@@ -1,3 +1,3 @@
 export interface LoginAck {
-    token: string
+    token: string;
 }

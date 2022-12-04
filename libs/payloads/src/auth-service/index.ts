@@ -1,2 +1,2 @@
-export * from './login.payload'
-export * from './logout.payload'
+export * from './login.payload';
+export * from './logout.payload';

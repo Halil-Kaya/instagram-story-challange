@@ -1,5 +1,5 @@
-import {ExceptionFilter, ArgumentsHost, Catch, Logger} from '@nestjs/common';
-import {GeneralServerException} from "@app/exceptions/exceptions/general-server.exception";
+import { ExceptionFilter, ArgumentsHost, Catch, Logger } from '@nestjs/common';
+import { GeneralServerException } from '@app/exceptions/exceptions/general-server.exception';
 
 @Catch()
 export class GatewayExceptionFilter implements ExceptionFilter {
@@ -10,15 +10,10 @@ export class GatewayExceptionFilter implements ExceptionFilter {
         const response = ctx.getResponse();
         const request = ctx.getRequest();
         if (!exception.isCustomError) {
-            this.logger.error(
-                `[UNHANDLED ERROR]: [${exception?.message}] :-> `,
-                JSON.stringify(exception),
-            );
+            this.logger.error(`[UNHANDLED ERROR]: [${exception?.message}] :-> `, JSON.stringify(exception));
             exception = new GeneralServerException();
         } else {
-            this.logger.error(
-                `[ERROR:${exception.errorCode}] ${exception.message.toUpperCase()}`,
-            );
+            this.logger.error(`[ERROR:${exception.errorCode}] ${exception.message.toUpperCase()}`);
         }
         response.status(500).json({
             meta: {

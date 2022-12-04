@@ -1,1 +1,1 @@
-export * from './add-to-queue.payload'
+export * from './add-to-queue.payload';

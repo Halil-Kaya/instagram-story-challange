@@ -1,8 +1,8 @@
-import {Module} from "@nestjs/common";
-import {AuthController} from "./auth.controller";
-import {ClientsModule, Transport} from "@nestjs/microservices";
-import {JWTStrategy} from "../../core/strategy";
-import {Services} from "@app/payloads";
+import { Module } from '@nestjs/common';
+import { AuthController } from './auth.controller';
+import { ClientsModule, Transport } from '@nestjs/microservices';
+import { JWTStrategy } from '../../core/strategy';
+import { Services } from '@app/payloads';
 
 @Module({
     imports: [
@@ -11,13 +11,12 @@ import {Services} from "@app/payloads";
                 name: Services.AUTH_SERVICE,
                 transport: Transport.TCP,
                 options: {
-                    host: 'auth-service'
-                }
+                    host: 'auth-service',
+                },
             },
-        ])
+        ]),
     ],
     controllers: [AuthController],
-    providers: [JWTStrategy]
+    providers: [JWTStrategy],
 })
-export class AuthModule {
-}
+export class AuthModule {}

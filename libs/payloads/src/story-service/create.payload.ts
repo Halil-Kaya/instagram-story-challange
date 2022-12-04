@@ -1,3 +1,3 @@
-import {IStory} from "@app/interfaces";
+import { IStory } from '@app/interfaces';
 
-export type Create = Omit<IStory, 'id' | 'createdAt'>
+export type Create = Omit<IStory, 'id' | 'createdAt'>;

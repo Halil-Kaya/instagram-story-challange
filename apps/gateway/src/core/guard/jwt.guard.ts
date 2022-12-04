@@ -1,11 +1,9 @@
-import {CanActivate, ExecutionContext, Injectable} from '@nestjs/common';
-import {AuthGuard} from '@nestjs/passport';
-import {StrategyType} from "../strategy/strategy-types.enum";
+import { CanActivate, ExecutionContext, Injectable } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
+import { StrategyType } from '../strategy/strategy-types.enum';
 
 @Injectable()
-export class JWTGuard
-    extends AuthGuard(StrategyType.JWT)
-    implements CanActivate {
+export class JWTGuard extends AuthGuard(StrategyType.JWT) implements CanActivate {
     constructor() {
         super();
     }

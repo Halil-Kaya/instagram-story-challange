@@ -1,25 +1,25 @@
-import {createClient} from 'redis';
-import {config} from "../../config";
+import { createClient } from 'redis';
+import { config } from '../../config';
 
 const client = createClient({
-    url: config.redisConnectionUrl
+    url: config.redisConnectionUrl,
 });
 
 client.on('error', (err) => console.log('Redis Client Error', err));
 
 export const connectRedis = async (): Promise<void> => {
     await client.connect();
-    await resetCache()
-}
+    await resetCache();
+};
 
 export const closeRedis = async (): Promise<void> => {
-    await client.disconnect()
-}
+    await client.disconnect();
+};
 
 export const resetCache = async () => {
-    await client.flushAll()
-}
+    await client.flushAll();
+};
 
-export const getRedis =  () => {
-    return client
-}
+export const getRedis = () => {
+    return client;
+};

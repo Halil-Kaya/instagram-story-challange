@@ -1,1 +1,1 @@
-export * from './story-create.dto'
+export * from './story-create.dto';

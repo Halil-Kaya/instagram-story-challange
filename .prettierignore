@@ -1,4 +1,6 @@
 /dist
 .prettierrc
 /node_modules
+/docker
 *.json
+README.md

@@ -1,9 +1,9 @@
-import {Module} from '@nestjs/common';
-import {UserController} from './controller/user.controller';
-import {UserService} from './service/user.service';
-import {MongooseModule} from "@nestjs/mongoose";
-import {postFindOne, preSave, User, UserSchema} from "./model/user.model";
-import {UserRepository} from "./repository/user.repository";
+import { Module } from '@nestjs/common';
+import { UserController } from './controller/user.controller';
+import { UserService } from './service/user.service';
+import { MongooseModule } from '@nestjs/mongoose';
+import { postFindOne, preSave, User, UserSchema } from './model/user.model';
+import { UserRepository } from './repository/user.repository';
 
 @Module({
     imports: [
@@ -19,8 +19,6 @@ import {UserRepository} from "./repository/user.repository";
         ]),
     ],
     controllers: [UserController],
-    providers: [UserService, UserRepository]
+    providers: [UserService, UserRepository],
 })
-
-export class UserModule {
-}
+export class UserModule {}

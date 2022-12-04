@@ -1,3 +1,3 @@
-import {IStory} from "@app/interfaces";
+import { IStory } from '@app/interfaces';
 
-export type AddToQueue = Pick<IStory, 'id'>
+export type AddToQueue = Pick<IStory, 'id'>;

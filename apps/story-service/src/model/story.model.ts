@@ -1,31 +1,31 @@
-import {Column, Entity, PrimaryGeneratedColumn} from "typeorm";
-import {IStory} from "@app/interfaces";
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { IStory } from '@app/interfaces';
 
 @Entity()
 export class Story implements IStory {
     @PrimaryGeneratedColumn({
-        type: 'bigint'
+        type: 'bigint',
     })
     id: string;
 
     @Column({
-        nullable: false
+        nullable: false,
     })
     title: string;
 
     @Column({
-        nullable: false
+        nullable: false,
     })
     content: string;
 
     @Column({
-        nullable: false
+        nullable: false,
     })
     userId: string;
 
     @Column({
         type: 'date',
-        default: new Date()
+        default: new Date(),
     })
     createdAt: Date;
 }

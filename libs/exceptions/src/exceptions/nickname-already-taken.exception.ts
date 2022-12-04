@@ -1,5 +1,5 @@
-import {CustomException} from "@app/exceptions/exceptions/custom.exception";
-import {ErrorCodes} from "@app/exceptions/error-codes";
+import { CustomException } from '@app/exceptions/exceptions/custom.exception';
+import { ErrorCodes } from '@app/exceptions/error-codes';
 
 export class NicknameAlreadyTakenException extends CustomException {
     constructor() {

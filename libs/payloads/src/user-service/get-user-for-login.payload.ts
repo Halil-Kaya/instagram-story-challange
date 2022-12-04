@@ -1,3 +1,3 @@
-import {IUser} from "@app/interfaces/user.interface";
+import { IUser } from '@app/interfaces/user.interface';
 
-export type GetUserForLogin = Pick<IUser, 'nickname'>
+export type GetUserForLogin = Pick<IUser, 'nickname'>;

@@ -1,14 +1,14 @@
-import {Module} from "@nestjs/common";
-import {ConfigModule, ConfigService} from "@nestjs/config";
-import {QueueModule} from "./queue.module";
-import {BullModule} from "@nestjs/bull";
-import {IEnvironment} from "./environment.interface";
+import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
+import { QueueModule } from './queue.module';
+import { BullModule } from '@nestjs/bull';
+import { IEnvironment } from './environment.interface';
 
 @Module({
     imports: [
         ConfigModule.forRoot({
             envFilePath: 'environments/queue-service.env',
-            isGlobal: true
+            isGlobal: true,
         }),
         BullModule.forRootAsync({
             imports: [ConfigModule],
@@ -18,13 +18,11 @@ import {IEnvironment} from "./environment.interface";
                     port: configService.get<number>('REDIS_PORT'),
                 },
             }),
-            inject: [ConfigService]
+            inject: [ConfigService],
         }),
-        QueueModule
+        QueueModule,
     ],
     controllers: [],
     providers: [],
 })
-export class AppModule {
-
-}
+export class AppModule {}

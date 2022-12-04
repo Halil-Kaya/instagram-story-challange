@@ -1,3 +1,3 @@
 export class LogoutPayload {
-    _id: string
+    _id: string;
 }
