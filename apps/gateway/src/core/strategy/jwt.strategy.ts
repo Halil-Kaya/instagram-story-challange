@@ -12,8 +12,8 @@ import {InjectRedis, Redis} from "@nestjs-modules/ioredis";
 export class JWTStrategy
     extends PassportStrategy(Strategy, StrategyType.JWT) {
 
-    constructor(private readonly configService: ConfigService<IEnvironment>,
-                @InjectRedis() private readonly redis: Redis,) {
+    constructor(@InjectRedis() private readonly redis: Redis,
+                private readonly configService: ConfigService<IEnvironment>) {
         super({
             jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
             ignoreExpiration: false,
