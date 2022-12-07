@@ -1,12 +1,13 @@
-import { Module } from '@nestjs/common';
-import { JwtModule } from '@nestjs/jwt';
-import { ConfigService } from '@nestjs/config';
-import { IEnvironment } from './environment.interface';
-import { AuthController } from './controller/auth.controller';
-import { AuthService } from './service/auth.service';
-import { AuthCacheService } from './repository/auth-cache.service';
-import { ClientsModule, Transport } from '@nestjs/microservices';
-import { RedisModule } from '@nestjs-modules/ioredis';
+import {Module} from '@nestjs/common';
+import {JwtModule} from '@nestjs/jwt';
+import {ConfigService} from '@nestjs/config';
+import {IEnvironment} from './environment.interface';
+import {AuthController} from './controller/auth.controller';
+import {AuthService} from './service/auth.service';
+import {AuthCacheService} from './repository/auth-cache.service';
+import {ClientsModule, Transport} from '@nestjs/microservices';
+import {RedisModule} from '@nestjs-modules/ioredis';
+import {Services} from "@app/payloads";
 
 @Module({
     imports: [
@@ -22,7 +23,7 @@ import { RedisModule } from '@nestjs-modules/ioredis';
         }),
         ClientsModule.register([
             {
-                name: 'USER_SERVICE',
+                name: Services.USER_SERVICE,
                 transport: Transport.TCP,
                 options: {
                     host: 'user-service',
@@ -43,4 +44,5 @@ import { RedisModule } from '@nestjs-modules/ioredis';
     controllers: [AuthController],
     providers: [AuthService, AuthCacheService],
 })
-export class AuthModule {}
+export class AuthModule {
+}
