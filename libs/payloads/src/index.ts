@@ -3,7 +3,7 @@ import * as AuthServicePayloads from './auth-service';
 import * as StoryServicePayloads from './story-service';
 import * as QueueServicePayloads from './queue-service';
 
-export { UserServicePayloads, AuthServicePayloads, StoryServicePayloads, QueueServicePayloads };
+export {UserServicePayloads, AuthServicePayloads, StoryServicePayloads, QueueServicePayloads};
 
 export enum UserServicePatterns {
     CREATE = 'create',
@@ -17,6 +17,7 @@ export enum AuthServicePatterns {
 
 export enum StoryServicePatterns {
     CREATE = 'create',
+    DELETE = 'delete'
 }
 
 export enum QueueServicePatterns {
