@@ -1,4 +1,4 @@
-import { UserCreateDto } from '../../../src/modules/user/dto';
+import { UserCreateDto } from '../../../apps/gateway/src/modules/user/dto';
 import { createUser } from '../../common/user.helper';
 import { IUser } from '@app/interfaces/user.interface';
 import { MetaInterface } from '@app/interceptors';

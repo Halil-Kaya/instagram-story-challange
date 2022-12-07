@@ -96,7 +96,8 @@
     "testEnvironment": "node",
     "roots": [
       "<rootDir>/apps/",
-      "<rootDir>/libs/"
+      "<rootDir>/libs/",
+      "<rootDir>/e2e"
     ],
     "moduleNameMapper": {
       "^@app/interfaces(|/.*)$": "<rootDir>/libs/interfaces/src/$1",

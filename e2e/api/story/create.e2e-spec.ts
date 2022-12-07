@@ -1,10 +1,10 @@
 import { closeMongoDb, connectMongoDb } from '../../common/db/mongo.helper';
 import { closeRedis, connectRedis } from '../../common/db/redis.helper';
-import { UserCreateDto } from '../../../src/modules/user/dto';
-import { LoginDto } from '../../../src/modules/auth/dto/login.dto';
+import { UserCreateDto } from '../../../apps/gateway/src/modules/user/dto';
+import { LoginDto } from '../../../apps/gateway/src/modules/auth/dto/login.dto';
 import { login } from '../../common/auth.helper';
 import { createStory } from '../../common/story.helper';
-import { StoryCreateDto } from '../../../src/modules/story/dto';
+import { StoryCreateDto } from '../../../apps/gateway/src/modules/story/dto';
 import { createUser } from '../../common/user.helper';
 import { closePostgresqlDb, connectPostgresqlDb } from '../../common/db/postgresql.helper';
 import { IStory, IUser } from '@app/interfaces';

@@ -2,7 +2,7 @@ import { baseUri } from './index';
 import axios, { AxiosResponse } from 'axios';
 import { Response } from '@app/interceptors';
 import { IStory } from '@app/interfaces';
-import { StoryCreateDto } from '../../src/modules/story/dto';
+import { StoryCreateDto } from '../../apps/gateway/src/modules/story/dto';
 
 const uri = baseUri + 'story/';
 
