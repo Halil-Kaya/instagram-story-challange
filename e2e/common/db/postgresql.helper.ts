@@ -1,5 +1,5 @@
-import { Client } from 'pg';
-import { config } from '../../config';
+import {Client} from 'pg';
+import {config} from '../../config';
 
 const postgresqlDb = new Client({
     host: config.postgresql.host,
