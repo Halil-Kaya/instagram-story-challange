@@ -9,4 +9,11 @@ export const config = {
         password: 'postgres',
         database: 'isc',
     },
+    storyQueue: {
+        delayTimeForDeleteStoryJob: 24000
+    },
+    redis: {
+        host: 'localhost',
+        port: 6378
+    }
 };
