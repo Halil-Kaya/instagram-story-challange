@@ -19,6 +19,7 @@ export class QueueService {
             removeOnFail: true,
             removeOnComplete: true,
             delay: this.configService.get<number>('DELAY_TIME_FOR_DELETE_STORY_JOB'),
+            jobId: payload.id.toString()
         });
     }
 }
