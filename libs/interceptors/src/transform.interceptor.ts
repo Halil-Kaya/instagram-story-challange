@@ -1,6 +1,7 @@
 import { CallHandler, ExecutionContext, Injectable, Logger, NestInterceptor } from '@nestjs/common';
 import { map } from 'rxjs/operators';
 import { Observable } from 'rxjs';
+import { maskHelper } from "@app/interceptors/mask.helper";
 
 export interface MetaInterface {
     headers: any;
@@ -22,7 +23,7 @@ export class TransformInterceptor implements NestInterceptor {
     intercept(context: ExecutionContext, next: CallHandler): Observable<Response<any>> {
         const { method, url, body, headers, params, status } = context.switchToHttp().getRequest();
         const reqId = (Math.random() + 1).toString(36).substring(2);
-        this.logger.log(`REQ:[${reqId}] [${method} ${url}]:-> ${JSON.stringify(body)}`);
+        this.logger.log(`REQ:[${reqId}] [${method} ${url}]:-> ${JSON.stringify(maskHelper(body,['password']))}`);
         return next.handle().pipe(
             map((data) => {
                 const res = {
@@ -34,7 +35,7 @@ export class TransformInterceptor implements NestInterceptor {
                     },
                     result: data,
                 };
-                this.logger.log(`RES:[${reqId}] [${method} ${url}] :-> ${JSON.stringify(res)}`);
+                this.logger.log(`RES:[${reqId}] [${method} ${url}] :-> ${JSON.stringify(maskHelper(res,['password']))}`);
                 return res;
             }),
         );
