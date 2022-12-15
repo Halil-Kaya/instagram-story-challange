@@ -1,9 +1,9 @@
 import {Inject, Injectable} from '@nestjs/common';
 import {StoryRepository} from '../repository/story.repository';
 import {QueueServicePatterns, Services, StoryServicePayloads, QueueServicePayloads} from '@app/payloads';
-import {IStory} from '@app/interfaces';
+import { IStory, PaginatedResponse, Pagination } from "@app/interfaces";
 import {ClientProxy} from '@nestjs/microservices';
-import { PaginatedResponse } from '@app/interfaces/pagination.interface';
+import { FindOptionsWhere } from "typeorm";
 
 @Injectable()
 export class StoryService {
@@ -26,6 +26,26 @@ export class StoryService {
     }
 
     async fetchStories(payload : StoryServicePayloads.Fetch) : Promise<PaginatedResponse<IStory>>{
-        return;
+        const { pagination, userId } = payload
+        const query = {
+            userId
+        }
+        await this.updatePagination(payload.pagination,query)
+        const items = await this.storyRepository.find({
+            where: query,
+            skip : pagination.offset,
+            take : pagination.limit
+        });
+        return{
+            pagination,
+            items
+        }
+    }
+
+    private async updatePagination(
+        pagination: Pagination, query?: FindOptionsWhere<IStory>): Promise<void> {
+        pagination.totalItemCount = await this.storyRepository.countBy(query);
+        pagination.offset = pagination?.offset ? pagination.offset : 0;
+        pagination.totalPageCount = pagination.totalItemCount == pagination.limit ? 0 : Math.floor(pagination.totalItemCount / pagination.limit);
     }
 }
