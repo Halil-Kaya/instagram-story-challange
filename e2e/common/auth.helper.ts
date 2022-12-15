@@ -5,7 +5,6 @@ import {LoginDto} from '../../apps/gateway/src/modules/auth/dto/login.dto';
 import {LoginAck} from '@app/interfaces/login.ack.interface';
 import {UserCreateDto} from "../../apps/gateway/src/modules/user/dto";
 import {createUser} from "./user.helper";
-
 const uri = baseUri + 'auth/';
 
 export const login = (dto: LoginDto): Promise<AxiosResponse<Response<LoginAck>>> => {
