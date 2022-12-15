@@ -7,26 +7,26 @@ import { IEnvironment } from './environment.interface';
 import { StoryModule } from './modules/story/story.module';
 
 @Module({
-    imports: [
-        ConfigModule.forRoot({
-            envFilePath: 'environments/gateway.env',
-            isGlobal: true,
-        }),
-        RedisModule.forRootAsync({
-            imports: [],
-            useFactory: async (configService: ConfigService<IEnvironment>) => ({
-                config: {
-                    host: configService.get('REDIS_HOST'),
-                    port: configService.get('REDIS_PORT'),
-                },
-            }),
-            inject: [ConfigService],
-        }),
-        UserModule,
-        AuthModule,
-        StoryModule,
-    ],
-    controllers: [],
-    providers: [],
+	imports: [
+		ConfigModule.forRoot({
+			envFilePath: 'environments/gateway.env',
+			isGlobal: true,
+		}),
+		RedisModule.forRootAsync({
+			imports: [],
+			useFactory: async (configService: ConfigService<IEnvironment>) => ({
+				config: {
+					host: configService.get('REDIS_HOST'),
+					port: configService.get('REDIS_PORT'),
+				},
+			}),
+			inject: [ConfigService],
+		}),
+		UserModule,
+		AuthModule,
+		StoryModule,
+	],
+	controllers: [],
+	providers: [],
 })
 export class AppModule {}

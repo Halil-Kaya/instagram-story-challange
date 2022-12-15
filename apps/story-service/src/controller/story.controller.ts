@@ -5,6 +5,7 @@ import {StoryServicePatterns, StoryServicePayloads} from '@app/payloads';
 import {IStory} from '@app/interfaces';
 import {RpcLoggerInterceptor} from '@app/interceptors';
 import {RpcExceptionFilter} from '@app/filters';
+import { PaginatedResponse } from "@app/interfaces/pagination.interface";
 
 @UseInterceptors(RpcLoggerInterceptor)
 @UseFilters(RpcExceptionFilter)
@@ -19,9 +20,17 @@ export class StoryController {
         return this.storyService.create(payload);
     }
 
+    @MessagePattern(StoryServicePatterns.FETCH)
+    async getStories(payload: StoryServicePayloads.Fetch): Promise<PaginatedResponse<IStory>> {
+        return this.storyService.fetchStories(payload);
+    }
+
+
     @MessagePattern(StoryServicePatterns.DELETE)
     async delete(payload: StoryServicePayloads.Delete): Promise<void> {
         return this.storyService.delete(payload);
     }
+
+
 
 }

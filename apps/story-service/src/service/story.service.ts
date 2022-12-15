@@ -3,6 +3,7 @@ import {StoryRepository} from '../repository/story.repository';
 import {QueueServicePatterns, Services, StoryServicePayloads, QueueServicePayloads} from '@app/payloads';
 import {IStory} from '@app/interfaces';
 import {ClientProxy} from '@nestjs/microservices';
+import { PaginatedResponse } from '@app/interfaces/pagination.interface';
 
 @Injectable()
 export class StoryService {
@@ -22,5 +23,9 @@ export class StoryService {
 
     async delete(payload: StoryServicePayloads.Delete): Promise<void> {
         await this.storyRepository.delete(payload)
+    }
+
+    async fetchStories(payload : StoryServicePayloads.Fetch) : Promise<PaginatedResponse<IStory>>{
+        return;
     }
 }

@@ -17,6 +17,7 @@ export enum AuthServicePatterns {
 
 export enum StoryServicePatterns {
     CREATE = 'create',
+    FETCH = 'fetch',
     DELETE = 'delete'
 }
 
