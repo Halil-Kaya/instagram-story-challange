@@ -42,3 +42,20 @@ it("should fetch stories with pagination", async () => {
 		expect(isSorted(totalItems.map(story => +story.id))).toBeTruthy()
 });
 
+it("should not fetch stories if page is wrong", async ()=> {
+		const token = await loginWithTestUser();
+		for(let i = 0 ; i<10 ;i++){
+			const createStoryDto: StoryCreateDto = {
+				title: `#title-${i}`,
+				content: `#content-${i}`
+			};
+			await createStory(token, createStoryDto);
+			await sleep(50)
+		}
+		const pageResult = await fetchStoriesWithPagination(token,{limit : 5,page : 100})
+		const page = <PaginatedResponse<IStory>>pageResult.data.result
+		expect(page.pagination.totalPageCount).toBe(2)
+		expect(page.pagination.limit).toBe(5)
+		expect(page.pagination.current).toBe(100)
+		expect(page.items.length).toBe(0)
+});
