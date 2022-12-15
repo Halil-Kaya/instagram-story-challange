@@ -18,7 +18,7 @@ export class User implements IUser {
     @Prop({ type: String, required: true })
     nickname: string;
 
-    @Prop({ type: String, minlength: 8, maxlength: 24, select: false, required: true })
+    @Prop({ type: String, minlength: 4, maxlength: 24, select: false, required: true })
     password: string;
 
     @Prop({ type: Date, default: Date.now, required: false })
