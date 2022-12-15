@@ -1,6 +1,6 @@
 import { IsString } from "class-validator";
 
-export class GetUserForLogin {
+export class AddToQueue {
     @IsString()
-    nickname : string
+    id: string;
 }

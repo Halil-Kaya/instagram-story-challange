@@ -18,7 +18,7 @@ export class AuthService {
     ) {
     }
 
-    async login({nickname, password}: AuthServicePayloads.LoginPayload): Promise<LoginAck> {
+    async login({nickname, password}: AuthServicePayloads.Login): Promise<LoginAck> {
         const user = await firstValueFrom(
             this.userServiceClient.send<IUser, UserServicePayloads.GetUserForLogin>(
                 UserServicePatterns.GET_USER_FOR_LOGIN,
@@ -41,7 +41,7 @@ export class AuthService {
         };
     }
 
-    async logout({_id}: AuthServicePayloads.LogoutPayload): Promise<void> {
+    async logout({_id}: AuthServicePayloads.Logout): Promise<void> {
         await this.authCacheRepository.removeUser(_id);
     }
 

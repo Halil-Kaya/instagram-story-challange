@@ -1,3 +1,15 @@
-import { IStory } from '@app/interfaces';
+import { IsMongoId, IsString, MinLength } from "class-validator";
 
-export type Create = Omit<IStory, 'id' | 'createdAt'>;
+export class Create {
+    @IsString()
+    @MinLength(2)
+    title: string;
+
+    @IsString()
+    @MinLength(2)
+    content: string;
+
+    @IsString()
+    @IsMongoId()
+    userId: string;
+}

@@ -1,4 +1,4 @@
-import { Controller, UseFilters, UseInterceptors } from '@nestjs/common';
+import { Controller, UseFilters, UseInterceptors, UsePipes, ValidationPipe } from "@nestjs/common";
 import { AuthService } from '../service/auth.service';
 import { MessagePattern } from '@nestjs/microservices';
 import { LoginAck } from '@app/interfaces/login.ack.interface';
@@ -9,17 +9,18 @@ import { AuthServicePayloads } from '@app/payloads';
 
 @UseInterceptors(RpcLoggerInterceptor)
 @UseFilters(RpcExceptionFilter)
+@UsePipes(new ValidationPipe())
 @Controller()
 export class AuthController {
     constructor(private readonly authService: AuthService) {}
 
     @MessagePattern(AuthServicePatterns.LOGIN)
-    async login(payload: AuthServicePayloads.LoginPayload): Promise<LoginAck> {
+    async login(payload: AuthServicePayloads.Login): Promise<LoginAck> {
         return this.authService.login(payload);
     }
 
     @MessagePattern(AuthServicePatterns.LOGOUT)
-    async logout(payload: AuthServicePayloads.LogoutPayload): Promise<void> {
+    async logout(payload: AuthServicePayloads.Logout): Promise<void> {
         return this.authService.logout(payload);
     }
 }

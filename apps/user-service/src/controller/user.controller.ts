@@ -1,4 +1,4 @@
-import { Controller, UseFilters, UseInterceptors } from '@nestjs/common';
+import { Controller, UseFilters, UseInterceptors, UsePipes, ValidationPipe } from "@nestjs/common";
 import { MessagePattern } from '@nestjs/microservices';
 import { UserService } from '../service/user.service';
 import { IUser } from '@app/interfaces/user.interface';
@@ -8,6 +8,7 @@ import { UserServicePatterns, UserServicePayloads } from '@app/payloads';
 
 @UseInterceptors(RpcLoggerInterceptor)
 @UseFilters(RpcExceptionFilter)
+@UsePipes(new ValidationPipe())
 @Controller()
 export class UserController {
     constructor(private readonly userService: UserService) {}

@@ -1,3 +1,13 @@
-import { IUser } from '@app/interfaces/user.interface';
+import { IsString } from "class-validator";
 
-export type Create = Omit<IUser, '_id' | 'createdAt'>;
+export class Create {
+  @IsString()
+  fullName: string;
+
+  @IsString()
+  nickname: string;
+
+  @IsString()
+  password: string;
+}
+

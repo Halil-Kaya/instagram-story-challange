@@ -1,3 +1,6 @@
-import {IStory} from '@app/interfaces';
+import { IsMongoId } from "class-validator";
 
-export type Delete = Pick<IStory, 'id'>;
+export class Delete {
+    @IsMongoId()
+    id : string
+}

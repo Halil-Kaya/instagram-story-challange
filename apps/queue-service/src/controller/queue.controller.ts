@@ -1,4 +1,4 @@
-import { Controller, UseFilters, UseInterceptors } from '@nestjs/common';
+import { Controller, UseFilters, UseInterceptors, UsePipes, ValidationPipe } from "@nestjs/common";
 import { QueueService } from '../service/queue.service';
 import { MessagePattern } from '@nestjs/microservices';
 import { QueueServicePatterns, QueueServicePayloads } from '@app/payloads';
@@ -7,6 +7,7 @@ import { RpcExceptionFilter } from '@app/filters';
 
 @UseInterceptors(RpcLoggerInterceptor)
 @UseFilters(RpcExceptionFilter)
+@UsePipes(new ValidationPipe())
 @Controller()
 export class QueueController {
     constructor(private readonly queueService: QueueService) {}

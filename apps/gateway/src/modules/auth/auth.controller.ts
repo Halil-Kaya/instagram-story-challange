@@ -16,7 +16,7 @@ export class AuthController {
     @Post('login')
     login(@Body() dto: LoginDto) {
         return this.authServiceClient
-            .send<LoginAck, AuthServicePayloads.LoginPayload>(AuthServicePatterns.LOGIN, dto)
+            .send<LoginAck, AuthServicePayloads.Login>(AuthServicePatterns.LOGIN, dto)
             .pipe(timeout(5000));
     }
 
@@ -24,7 +24,7 @@ export class AuthController {
     @Post('logout')
     logout(@CurrentUser() user: IUser) {
         return this.authServiceClient
-            .emit<void, AuthServicePayloads.LogoutPayload>(AuthServicePatterns.LOGOUT, {
+            .emit<void, AuthServicePayloads.Logout>(AuthServicePatterns.LOGOUT, {
                 _id: user._id,
             })
             .pipe(timeout(5000));

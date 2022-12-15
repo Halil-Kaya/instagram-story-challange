@@ -1,4 +1,4 @@
-import {Controller, UseFilters, UseInterceptors} from '@nestjs/common';
+import { Controller, UseFilters, UseInterceptors, UsePipes, ValidationPipe } from "@nestjs/common";
 import {StoryService} from '../service/story.service';
 import {MessagePattern} from '@nestjs/microservices';
 import {StoryServicePatterns, StoryServicePayloads} from '@app/payloads';
@@ -8,6 +8,7 @@ import {RpcExceptionFilter} from '@app/filters';
 
 @UseInterceptors(RpcLoggerInterceptor)
 @UseFilters(RpcExceptionFilter)
+@UsePipes(new ValidationPipe())
 @Controller()
 export class StoryController {
     constructor(private readonly storyService: StoryService) {
