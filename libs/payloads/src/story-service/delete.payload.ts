@@ -1,6 +1,6 @@
-import { IsMongoId } from "class-validator";
+import { IsString } from "class-validator";
 
 export class Delete {
-    @IsMongoId()
+    @IsString()
     id : string
 }
