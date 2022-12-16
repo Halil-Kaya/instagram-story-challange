@@ -15,12 +15,12 @@ export class UserService {
         }
         const createdUser = await this.userRepository.create(payload);
         return {
-            _id : createdUser._id.toString(),
-            nickname : createdUser.nickname,
-            fullName : createdUser.fullName,
-            password : createdUser.password,
-            createdAt : createdUser.createdAt
-        }
+            _id: createdUser._id.toString(),
+            nickname: createdUser.nickname,
+            fullName: createdUser.fullName,
+            password: createdUser.password,
+            createdAt: createdUser.createdAt
+        };
     }
 
     async getUserForLogin({ nickname }: UserServicePayloads.GetUserForLogin): Promise<User> {

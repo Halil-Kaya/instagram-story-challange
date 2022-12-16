@@ -16,7 +16,7 @@ describe('UserController', () => {
         fullName: 'halil-kaya',
         nickname: 'hlk',
         password: 'password',
-        createdAt: new Date(),
+        createdAt: new Date()
     };
 
     beforeEach(async () => {
@@ -27,9 +27,9 @@ describe('UserController', () => {
                 UserController,
                 {
                     provide: getModelToken(User.name),
-                    useValue: mockUserModel,
-                },
-            ],
+                    useValue: mockUserModel
+                }
+            ]
         }).compile();
         mockUserController = module.get<UserController>(UserController);
         mockUserService = module.get<UserService>(UserService);
@@ -47,14 +47,14 @@ describe('UserController', () => {
                 fullName: 'halil-kaya',
                 nickname: 'hlk',
                 password: 'password',
-                createdAt: new Date(),
+                createdAt: new Date()
             };
             const mock = await jest.spyOn(mockUserService, 'create');
             mock.mockImplementation(() => Promise.resolve(mockResult));
             const reqDto = {
                 fullName: 'halil-kaya',
                 nickname: 'hlk',
-                password: 'password',
+                password: 'password'
             };
             expect(await mockUserController.create(reqDto)).toBe(mockResult);
         });
@@ -67,7 +67,7 @@ describe('UserController', () => {
             const reqDto = {
                 fullName: 'halil-kaya',
                 nickname: 'hlk',
-                password: 'password',
+                password: 'password'
             };
             try {
                 await mockUserController.create(reqDto);
@@ -84,7 +84,7 @@ describe('UserController', () => {
                 fullName: 'halil-kaya',
                 nickname: 'hlk',
                 password: 'password',
-                createdAt: new Date(),
+                createdAt: new Date()
             };
             const mock = await jest.spyOn(mockUserService, 'getUserForLogin');
             mock.mockImplementation(() => Promise.resolve(mockResult));

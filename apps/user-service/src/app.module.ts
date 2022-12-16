@@ -8,18 +8,18 @@ import { UserModule } from './user.module';
     imports: [
         ConfigModule.forRoot({
             envFilePath: 'environments/user-service.env',
-            isGlobal: true,
+            isGlobal: true
         }),
         MongooseModule.forRootAsync({
             imports: [ConfigModule],
             useFactory: async (configService: ConfigService<IEnvironment>) => ({
-                uri: configService.get<string>('MONGO_CONNECTION_URL'),
+                uri: configService.get<string>('MONGO_CONNECTION_URL')
             }),
-            inject: [ConfigService],
+            inject: [ConfigService]
         }),
-        UserModule,
+        UserModule
     ],
     controllers: [],
-    providers: [],
+    providers: []
 })
 export class AppModule {}

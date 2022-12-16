@@ -11,12 +11,12 @@ import { JWTStrategy } from '../../core/strategy';
                 name: Services.STORY_SERVICE,
                 transport: Transport.TCP,
                 options: {
-                    host: 'story-service',
-                },
-            },
-        ]),
+                    host: 'story-service'
+                }
+            }
+        ])
     ],
     controllers: [StoryController],
-    providers: [JWTStrategy],
+    providers: [JWTStrategy]
 })
 export class StoryModule {}

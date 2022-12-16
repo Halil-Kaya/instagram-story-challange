@@ -9,5 +9,5 @@ export interface Pagination {
 
 export interface PaginatedResponse<T> {
     pagination: Pagination;
-    items: T[]
+    items: T[];
 }

@@ -25,9 +25,9 @@ describe('UserRepository', () => {
                 UserRepository,
                 {
                     provide: getModelToken(User.name),
-                    useValue: mockUserModel,
-                },
-            ],
+                    useValue: mockUserModel
+                }
+            ]
         }).compile();
         mockUserRepository = module.get<UserRepository>(UserRepository);
     });
@@ -55,7 +55,7 @@ describe('UserRepository', () => {
             const createUserDto = {
                 fullName: 'halil kaya',
                 password: '12345678',
-                nickname: 'hlk',
+                nickname: 'hlk'
             };
             const createdUser = await mockUserRepository.create(createUserDto);
             expect(createdUser._id).toBeDefined();
@@ -67,13 +67,13 @@ describe('UserRepository', () => {
             await mockUserRepository.create({
                 fullName: 'halil kaya',
                 password: '12345678',
-                nickname: 'hlk',
+                nickname: 'hlk'
             });
             try {
                 await mockUserRepository.create({
                     fullName: 'halil kaya',
                     password: '12345678',
-                    nickname: 'hlk',
+                    nickname: 'hlk'
                 });
             } catch (err) {
                 expect(err).toBeInstanceOf(NicknameAlreadyTakenException);
@@ -84,7 +84,7 @@ describe('UserRepository', () => {
                 await mockUserRepository.create({
                     fullName: 'halil kaya',
                     password: '123',
-                    nickname: 'hlk#1',
+                    nickname: 'hlk#1'
                 });
             } catch (err) {
                 expect(err._message).toBe('User validation failed');
@@ -95,7 +95,7 @@ describe('UserRepository', () => {
                 await mockUserRepository.create({
                     fullName: 'halil kaya',
                     password: '1231231232132132132132131231231231232121',
-                    nickname: 'hlk#2',
+                    nickname: 'hlk#2'
                 });
             } catch (err) {
                 expect(err._message).toBe('User validation failed');
@@ -107,7 +107,7 @@ describe('UserRepository', () => {
             const createdUser = await mockUserRepository.create({
                 fullName: 'halil kaya',
                 password: '12345678',
-                nickname: 'hlk#3',
+                nickname: 'hlk#3'
             });
             const result = await mockUserRepository.isExist({ _id: createdUser._id });
             expect(result).toBeTruthy();
@@ -122,7 +122,7 @@ describe('UserRepository', () => {
             const createUserDto = {
                 fullName: 'halil kaya',
                 password: '12345678',
-                nickname: 'hlk#4',
+                nickname: 'hlk#4'
             };
             const { nickname } = await mockUserRepository.create(createUserDto);
             const user = await mockUserRepository.getUserWithPasswordByNickname(nickname);

@@ -6,7 +6,7 @@ import { hashSync } from 'bcryptjs';
 export type UserDocument = User & Document;
 
 @Schema({
-    versionKey: false,
+    versionKey: false
 })
 export class User implements IUser {
     @Prop({ type: MongooseSchema.Types.ObjectId, default: Types.ObjectId })

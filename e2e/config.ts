@@ -7,7 +7,7 @@ export const config = {
         port: 5432,
         username: 'postgres',
         password: 'postgres',
-        database: 'isc',
+        database: 'isc'
     },
     storyQueue: {
         delayTimeForDeleteStoryJob: 24000

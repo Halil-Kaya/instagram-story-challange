@@ -18,13 +18,13 @@ it('should logout user', async () => {
     const reqDto: UserCreateDto = {
         fullName: '#test-user',
         nickname: Math.random().toString(36).slice(2, 16),
-        password: 'passw@rd',
+        password: 'passw@rd'
     };
     const result = await createUser(reqDto);
     const createdUser = <IUser>result.data.result;
     const loginDto: LoginDto = {
         nickname: reqDto.nickname,
-        password: reqDto.password,
+        password: reqDto.password
     };
     const { data } = await login(loginDto);
     const { token } = data.result;

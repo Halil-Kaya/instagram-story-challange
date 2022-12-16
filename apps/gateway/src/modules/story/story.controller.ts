@@ -10,7 +10,7 @@ import { PaginatedResponse, Pagination } from '@app/interfaces/pagination.interf
 
 @Controller('story')
 export class StoryController {
-    constructor(@Inject(Services.STORY_SERVICE) private storyServiceClient: ClientProxy) { }
+    constructor(@Inject(Services.STORY_SERVICE) private storyServiceClient: ClientProxy) {}
 
     @UseGuards(JWTGuard)
     @Post()
@@ -18,20 +18,19 @@ export class StoryController {
         return this.storyServiceClient
             .send<IStory, StoryServicePayloads.Create>(StoryServicePatterns.CREATE, {
                 ...dto,
-                userId: user._id,
+                userId: user._id
             })
             .pipe(timeout(5000));
     }
 
-
     @UseGuards(JWTGuard)
     @Get()
     async getStories(@Paginate() pagination: Pagination, @CurrentUser() user: IUser) {
-        return this.storyServiceClient.send<PaginatedResponse<IStory>, StoryServicePayloads.Fetch>(
-            StoryServicePatterns.FETCH, {
-            pagination,
-            userId: user._id
-        }).pipe(timeout(5000));
+        return this.storyServiceClient
+            .send<PaginatedResponse<IStory>, StoryServicePayloads.Fetch>(StoryServicePatterns.FETCH, {
+                pagination,
+                userId: user._id
+            })
+            .pipe(timeout(5000));
     }
-
 }

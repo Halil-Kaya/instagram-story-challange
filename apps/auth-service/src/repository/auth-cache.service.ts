@@ -8,7 +8,7 @@ import { IEnvironment } from '../environment.interface';
 export class AuthCacheService {
     constructor(
         @InjectRedis() private readonly redis: Redis,
-        private readonly configService: ConfigService<IEnvironment>,
+        private readonly configService: ConfigService<IEnvironment>
     ) {}
 
     async saveUser(user: Omit<IUser, 'password'>): Promise<void> {

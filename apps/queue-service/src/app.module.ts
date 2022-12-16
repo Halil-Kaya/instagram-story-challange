@@ -8,21 +8,21 @@ import { IEnvironment } from './environment.interface';
     imports: [
         ConfigModule.forRoot({
             envFilePath: 'environments/queue-service.env',
-            isGlobal: true,
+            isGlobal: true
         }),
         BullModule.forRootAsync({
             imports: [ConfigModule],
             useFactory: async (configService: ConfigService<IEnvironment>) => ({
                 redis: {
                     host: configService.get<string>('REDIS_HOST'),
-                    port: configService.get<number>('REDIS_PORT'),
-                },
+                    port: configService.get<number>('REDIS_PORT')
+                }
             }),
-            inject: [ConfigService],
+            inject: [ConfigService]
         }),
-        QueueModule,
+        QueueModule
     ],
     controllers: [],
-    providers: [],
+    providers: []
 })
 export class AppModule {}

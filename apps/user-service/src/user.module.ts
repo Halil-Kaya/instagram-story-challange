@@ -14,11 +14,11 @@ import { UserRepository } from './repository/user.repository';
                     UserSchema.pre('save', preSave);
                     UserSchema.post('findOne', postFindOne);
                     return UserSchema;
-                },
-            },
-        ]),
+                }
+            }
+        ])
     ],
     controllers: [UserController],
-    providers: [UserService, UserRepository],
+    providers: [UserService, UserRepository]
 })
 export class UserModule {}

@@ -18,7 +18,7 @@ it('should create user', async () => {
     const reqDto: UserCreateDto = {
         fullName: '#test-user',
         nickname: Math.random().toString(36).slice(2, 16),
-        password: 'passw@rd',
+        password: 'passw@rd'
     };
     const { data } = await createUser(reqDto);
     const user = <IUser>data.result;
@@ -32,7 +32,7 @@ it('should throw nickname is already taken error', async () => {
     const reqDto: UserCreateDto = {
         fullName: '#test-user',
         nickname: Math.random().toString(36).slice(2, 16),
-        password: 'passw@rd',
+        password: 'passw@rd'
     };
     await createUser(reqDto);
 

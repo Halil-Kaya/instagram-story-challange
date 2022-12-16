@@ -15,12 +15,12 @@ import { Services } from '@app/payloads';
                 name: Services.QUEUE_SERVICE,
                 transport: Transport.TCP,
                 options: {
-                    host: 'queue-service',
-                },
-            },
-        ]),
+                    host: 'queue-service'
+                }
+            }
+        ])
     ],
     controllers: [StoryController],
-    providers: [StoryService, StoryRepository],
+    providers: [StoryService, StoryRepository]
 })
 export class StoryModule {}

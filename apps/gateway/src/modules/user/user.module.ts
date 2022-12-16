@@ -10,12 +10,12 @@ import { Services } from '@app/payloads';
                 name: Services.USER_SERVICE,
                 transport: Transport.TCP,
                 options: {
-                    host: 'user-service',
-                },
-            },
-        ]),
+                    host: 'user-service'
+                }
+            }
+        ])
     ],
     controllers: [UserController],
-    providers: [],
+    providers: []
 })
 export class UserModule {}

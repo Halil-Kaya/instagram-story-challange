@@ -25,7 +25,7 @@ export class AuthController {
     logout(@CurrentUser() user: IUser) {
         return this.authServiceClient
             .emit<void, AuthServicePayloads.Logout>(AuthServicePatterns.LOGOUT, {
-                _id: user._id,
+                _id: user._id
             })
             .pipe(timeout(5000));
     }

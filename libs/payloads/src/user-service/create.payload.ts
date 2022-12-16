@@ -1,13 +1,12 @@
-import { IsString } from "class-validator";
+import { IsString } from 'class-validator';
 
 export class Create {
-  @IsString()
-  fullName: string;
+    @IsString()
+    fullName: string;
 
-  @IsString()
-  nickname: string;
+    @IsString()
+    nickname: string;
 
-  @IsString()
-  password: string;
+    @IsString()
+    password: string;
 }
-

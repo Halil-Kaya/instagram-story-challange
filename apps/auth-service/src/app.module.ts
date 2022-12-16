@@ -6,11 +6,11 @@ import { ConfigModule } from '@nestjs/config';
     imports: [
         ConfigModule.forRoot({
             envFilePath: 'environments/auth-service.env',
-            isGlobal: true,
+            isGlobal: true
         }),
-        AuthModule,
+        AuthModule
     ],
     controllers: [],
-    providers: [],
+    providers: []
 })
 export class AppModule {}

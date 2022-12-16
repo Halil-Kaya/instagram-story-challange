@@ -18,12 +18,12 @@ describe('UserController', () => {
                         name: 'USER_SERVICE',
                         transport: Transport.TCP,
                         options: {
-                            host: 'user-service',
-                        },
-                    },
-                ]),
+                            host: 'user-service'
+                        }
+                    }
+                ])
             ],
-            controllers: [UserController],
+            controllers: [UserController]
         }).compile();
         mockUserController = module.get<UserController>(UserController);
         mockUserServiceClient = module.get<ClientProxy>('USER_SERVICE');
@@ -41,14 +41,14 @@ describe('UserController', () => {
                 fullName: 'halil-kaya',
                 nickname: 'hlk',
                 password: 'password',
-                createdAt: new Date(),
+                createdAt: new Date()
             };
             const mock = await jest.spyOn(mockUserServiceClient, 'send');
             mock.mockImplementation(() => of(mockResult));
             const reqDto: UserCreateDto = {
                 fullName: mockResult.fullName,
                 nickname: mockResult.nickname,
-                password: mockResult.password,
+                password: mockResult.password
             };
             const user = await firstValueFrom(mockUserController.create(reqDto));
             expect(user._id).toBeDefined();
@@ -64,7 +64,7 @@ describe('UserController', () => {
             const reqDto: UserCreateDto = {
                 fullName: 'halil-kaya',
                 nickname: 'hlk',
-                password: 'p@ssword',
+                password: 'p@ssword'
             };
             try {
                 await firstValueFrom(mockUserController.create(reqDto));

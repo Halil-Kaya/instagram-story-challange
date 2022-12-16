@@ -1,3 +1,3 @@
 export enum JobNames {
-    DELETE_STORY = 'delete_story',
+    DELETE_STORY = 'delete_story'
 }

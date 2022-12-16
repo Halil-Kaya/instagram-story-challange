@@ -1,4 +1,4 @@
-import { Controller, UseFilters, UseInterceptors, UsePipes, ValidationPipe } from "@nestjs/common";
+import { Controller, UseFilters, UseInterceptors, UsePipes, ValidationPipe } from '@nestjs/common';
 import { QueueService } from '../service/queue.service';
 import { MessagePattern } from '@nestjs/microservices';
 import { QueueServicePatterns, QueueServicePayloads } from '@app/payloads';

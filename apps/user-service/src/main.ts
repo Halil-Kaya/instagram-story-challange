@@ -8,15 +8,15 @@ async function bootstrap() {
     app.connectMicroservice<MicroserviceOptions>({
         transport: Transport.TCP,
         options: {
-            host: '0.0.0.0',
-        },
+            host: '0.0.0.0'
+        }
     });
     app.useGlobalPipes(
         new ValidationPipe({
             forbidNonWhitelisted: true,
             whitelist: true,
-            transform: true,
-        }),
+            transform: true
+        })
     );
     await app.startAllMicroservices();
 }

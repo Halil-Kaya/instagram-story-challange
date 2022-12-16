@@ -9,7 +9,7 @@ import { Story } from './model/story.model';
     imports: [
         ConfigModule.forRoot({
             envFilePath: 'environments/story-service.env',
-            isGlobal: true,
+            isGlobal: true
         }),
         TypeOrmModule.forRootAsync({
             imports: [ConfigModule],
@@ -21,13 +21,13 @@ import { Story } from './model/story.model';
                 password: configService.get<string>('POSTGRESQL_PASSWORD'),
                 database: configService.get<string>('POSTGRESQL_DATABASE'),
                 entities: [Story],
-                synchronize: true,
+                synchronize: true
             }),
-            inject: [ConfigService],
+            inject: [ConfigService]
         }),
-        StoryModule,
+        StoryModule
     ],
     controllers: [],
-    providers: [],
+    providers: []
 })
 export class AppModule {}

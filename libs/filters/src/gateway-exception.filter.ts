@@ -22,9 +22,9 @@ export class GatewayExceptionFilter implements ExceptionFilter {
                 status: request.status,
                 errorCode: exception.errorCode,
                 errorMessage: exception.message,
-                timestamp: new Date(),
+                timestamp: new Date()
             },
-            result: exception,
+            result: exception
         });
     }
 }

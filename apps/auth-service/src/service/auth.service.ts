@@ -1,31 +1,30 @@
-import {Inject, Injectable} from '@nestjs/common';
-import {JwtService} from '@nestjs/jwt';
-import {AuthServicePayloads, Services, UserServicePatterns, UserServicePayloads} from '@app/payloads';
-import {LoginAck} from '@app/interfaces/login.ack.interface';
-import {ClientProxy} from '@nestjs/microservices';
-import {IUser} from '@app/interfaces/user.interface';
-import {InvalidCredentialsException} from '@app/exceptions';
+import { Inject, Injectable } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { AuthServicePayloads, Services, UserServicePatterns, UserServicePayloads } from '@app/payloads';
+import { LoginAck } from '@app/interfaces/login.ack.interface';
+import { ClientProxy } from '@nestjs/microservices';
+import { IUser } from '@app/interfaces/user.interface';
+import { InvalidCredentialsException } from '@app/exceptions';
 import * as bcrypt from 'bcryptjs';
-import {firstValueFrom} from 'rxjs';
-import {AuthCacheService} from '../repository/auth-cache.service';
+import { firstValueFrom } from 'rxjs';
+import { AuthCacheService } from '../repository/auth-cache.service';
 
 @Injectable()
 export class AuthService {
     constructor(
         @Inject(Services.USER_SERVICE) private userServiceClient: ClientProxy,
         private readonly authCacheRepository: AuthCacheService,
-        private readonly jwtService: JwtService,
-    ) {
-    }
+        private readonly jwtService: JwtService
+    ) {}
 
-    async login({nickname, password}: AuthServicePayloads.Login): Promise<LoginAck> {
+    async login({ nickname, password }: AuthServicePayloads.Login): Promise<LoginAck> {
         const user = await firstValueFrom(
             this.userServiceClient.send<IUser, UserServicePayloads.GetUserForLogin>(
                 UserServicePatterns.GET_USER_FOR_LOGIN,
                 {
-                    nickname,
-                },
-            ),
+                    nickname
+                }
+            )
         );
         if (!user) {
             throw new InvalidCredentialsException();
@@ -37,17 +36,17 @@ export class AuthService {
         delete user.password;
         await this.authCacheRepository.saveUser(user);
         return {
-            token: this.jwtService.sign(this.getPayload(user)),
+            token: this.jwtService.sign(this.getPayload(user))
         };
     }
 
-    async logout({_id}: AuthServicePayloads.Logout): Promise<void> {
+    async logout({ _id }: AuthServicePayloads.Logout): Promise<void> {
         await this.authCacheRepository.removeUser(_id);
     }
 
     private getPayload(user: IUser): Pick<IUser, '_id'> {
         return {
-            _id: user._id,
+            _id: user._id
         };
     }
 

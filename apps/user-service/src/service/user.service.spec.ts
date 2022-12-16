@@ -28,9 +28,9 @@ describe('UserService', () => {
                 UserRepository,
                 {
                     provide: getModelToken(User.name),
-                    useValue: mockUserModel,
-                },
-            ],
+                    useValue: mockUserModel
+                }
+            ]
         }).compile();
         mockUserService = module.get<UserService>(UserService);
     });
@@ -58,7 +58,7 @@ describe('UserService', () => {
             const reqDto: UserServicePayloads.Create = {
                 fullName: 'test-user',
                 nickname: 'test-nickname',
-                password: '12345678',
+                password: '12345678'
             };
             const createdUser = await mockUserService.create(reqDto);
             expect(createdUser._id).toBeDefined();
@@ -71,7 +71,7 @@ describe('UserService', () => {
             const reqDto: UserServicePayloads.Create = {
                 fullName: 'test-user',
                 nickname: 'test-nickname',
-                password: '12345678',
+                password: '12345678'
             };
             await mockUserService.create(reqDto);
             try {
@@ -87,7 +87,7 @@ describe('UserService', () => {
             const reqDto: UserServicePayloads.Create = {
                 fullName: 'test-user',
                 nickname: 'test-nickname',
-                password: '12345678',
+                password: '12345678'
             };
             const { nickname } = await mockUserService.create(reqDto);
             const user = await mockUserService.getUserForLogin({ nickname });
