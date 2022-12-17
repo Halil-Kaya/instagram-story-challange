@@ -9,6 +9,7 @@ export interface MetaInterface {
     status: boolean;
     errorCode?: string;
     timestamp: Date;
+    requestId: string;
 }
 
 export interface Response<T> {
@@ -21,9 +22,10 @@ export class TransformInterceptor implements NestInterceptor {
     private logger = new Logger('HTTP');
 
     intercept(context: ExecutionContext, next: CallHandler): Observable<Response<any>> {
-        const { method, url, body, headers, params, status } = context.switchToHttp().getRequest();
-        const reqId = (Math.random() + 1).toString(36).substring(2);
-        this.logger.log(`REQ:[${reqId}] [${method} ${url}]:-> ${JSON.stringify(maskHelper(body, ['password']))}`);
+        const request = context.switchToHttp().getRequest();
+        const { method, url, body, headers, params, status } = request;
+        request.id = (Math.random() + 1).toString(36).substring(2);
+        this.logger.log(`REQ:[${request.id}] [${method} ${url}]:-> ${JSON.stringify(maskHelper(body, ['password']))}`);
         return next.handle().pipe(
             map((data) => {
                 const res = {
@@ -31,12 +33,13 @@ export class TransformInterceptor implements NestInterceptor {
                         headers: headers,
                         params: params,
                         status: status,
-                        timestamp: new Date()
+                        timestamp: new Date(),
+                        requestId: request.id
                     },
                     result: data
                 };
                 this.logger.log(
-                    `RES:[${reqId}] [${method} ${url}] :-> ${JSON.stringify(maskHelper(res, ['password']))}`
+                    `RES:[${request.id}] [${method} ${url}] :-> ${JSON.stringify(maskHelper(res, ['password']))}`
                 );
                 return res;
             })

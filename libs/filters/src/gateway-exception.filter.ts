@@ -10,10 +10,10 @@ export class GatewayExceptionFilter implements ExceptionFilter {
         const response = ctx.getResponse();
         const request = ctx.getRequest();
         if (!exception.isCustomError) {
-            this.logger.error(`[UNHANDLED ERROR]: [${exception?.message}] :-> `, JSON.stringify(exception));
+            this.logger.error(`RES:[${request.id}]:[UNHANDLED ERROR]: [${exception?.message}] :-> `, JSON.stringify(exception));
             exception = new GeneralServerException();
         } else {
-            this.logger.error(`[ERROR:${exception.errorCode}] ${exception.message.toUpperCase()}`);
+            this.logger.error(`RES:[${request.id}]:[ERROR:${exception.errorCode}] ${exception.message.toUpperCase()}`);
         }
         response.status(500).json({
             meta: {
@@ -22,7 +22,8 @@ export class GatewayExceptionFilter implements ExceptionFilter {
                 status: request.status,
                 errorCode: exception.errorCode,
                 errorMessage: exception.message,
-                timestamp: new Date()
+                timestamp: new Date(),
+                requestId : request.id
             },
             result: exception
         });
