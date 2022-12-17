@@ -6,7 +6,17 @@
   "root": "apps/gateway",
   "compilerOptions": {
     "webpack": true,
-    "tsConfigPath": "apps/gateway/tsconfig.app.json"
+    "tsConfigPath": "apps/gateway/tsconfig.app.json",
+    "plugins": [
+      {
+        "name": "@nestjs/swagger",
+        "options": {
+          "classValidatorShim": true,
+          "introspectComments": true,
+          "controllerFileNameSuffix" : ".controller.ts",
+          "dtoFileNameSuffix" : [".dto.ts",".ack.ts"]
+        }
+      }]
   },
   "projects": {
     "gateway": {
@@ -15,7 +25,17 @@
       "entryFile": "main",
       "sourceRoot": "apps/gateway/src",
       "compilerOptions": {
-        "tsConfigPath": "apps/gateway/tsconfig.app.json"
+        "tsConfigPath": "apps/gateway/tsconfig.app.json",
+        "plugins": [
+          {
+            "name": "@nestjs/swagger",
+            "options": {
+              "classValidatorShim": true,
+              "introspectComments": true,
+              "controllerFileNameSuffix" : ".controller.ts",
+              "dtoFileNameSuffix" : [".dto.ts"]
+            }
+        }]
       }
     },
     "user-service": {

@@ -5,14 +5,18 @@ import { timeout } from 'rxjs';
 import { AuthServicePatterns, Services } from '@app/payloads';
 import { LoginAck } from '@app/interfaces/login.ack.interface';
 import { AuthServicePayloads } from '@app/payloads';
-import { CurrentUser } from '../../core/decorator';
+import { ApiExceptions, CurrentUser } from "../../core/decorator";
 import { JWTGuard } from '../../core/guard';
 import { IUser } from '@app/interfaces';
+import { ApiTags } from "@nestjs/swagger";
+import { InvalidCredentialsException } from "@app/exceptions";
 
+@ApiTags('auth')
 @Controller('auth')
 export class AuthController {
     constructor(@Inject(Services.AUTH_SERVICE) private authServiceClient: ClientProxy) {}
 
+    @ApiExceptions(InvalidCredentialsException)
     @Post('login')
     login(@Body() dto: LoginDto) {
         return this.authServiceClient

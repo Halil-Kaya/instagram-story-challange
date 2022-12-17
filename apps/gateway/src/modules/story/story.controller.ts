@@ -7,7 +7,9 @@ import { timeout } from 'rxjs';
 import { JWTGuard } from '../../core/guard';
 import { CurrentUser, Paginate } from '../../core/decorator';
 import { PaginatedResponse, Pagination } from '@app/interfaces/pagination.interface';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('story')
 @Controller('story')
 export class StoryController {
     constructor(@Inject(Services.STORY_SERVICE) private storyServiceClient: ClientProxy) {}
