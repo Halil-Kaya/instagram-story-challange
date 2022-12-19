@@ -33,7 +33,7 @@
               "classValidatorShim": true,
               "introspectComments": true,
               "controllerFileNameSuffix" : ".controller.ts",
-              "dtoFileNameSuffix" : [".dto.ts"]
+              "dtoFileNameSuffix" : [".dto.ts",".ack.ts"]
             }
         }]
       }

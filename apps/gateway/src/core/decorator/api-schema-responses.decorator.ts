@@ -1,16 +1,28 @@
 import { applyDecorators } from '@nestjs/common';
-import { ApiOkResponse, getSchemaPath } from '@nestjs/swagger';
+import { ApiResponse, getSchemaPath } from "@nestjs/swagger";
 
-export const ApiResponseWithSchema = (model?: Function | string) => {
+export const ApiResponseWithSchema = (status : HttpStatusCodes,model?: Function | string) => {
     return applyDecorators(
-        ApiOkResponse({
-            status: 200,
+        ApiResponse({
+            status ,
             schema: {
                 properties: {
                     meta: {
                         type: 'object',
                         properties: {
                             requestId: {
+                                type: 'string'
+                            },
+                            headers: {
+                                type: 'object'
+                            },
+                            params: {
+                                type: 'object'
+                            },
+                            status: {
+                                type: 'boolean'
+                            },
+                            errorCode: {
                                 type: 'string'
                             }
                         }
@@ -21,3 +33,8 @@ export const ApiResponseWithSchema = (model?: Function | string) => {
         })
     );
 };
+
+export enum HttpStatusCodes {
+    OK = 200,
+    CREATED = 201
+}

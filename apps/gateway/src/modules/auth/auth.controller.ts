@@ -3,20 +3,23 @@ import { ClientProxy } from '@nestjs/microservices';
 import { LoginDto } from './dto/login.dto';
 import { timeout } from 'rxjs';
 import { AuthServicePatterns, Services } from '@app/payloads';
-import { LoginAck } from '@app/interfaces/login.ack.interface';
 import { AuthServicePayloads } from '@app/payloads';
-import { ApiExceptions, CurrentUser } from "../../core/decorator";
+import { ApiExceptions, ApiResponseWithSchema, CurrentUser, HttpStatusCodes } from "../../core/decorator";
 import { JWTGuard } from '../../core/guard';
 import { IUser } from '@app/interfaces';
-import { ApiTags } from "@nestjs/swagger";
+import { ApiBearerAuth, ApiExtraModels, ApiTags } from "@nestjs/swagger";
 import { InvalidCredentialsException } from "@app/exceptions";
+import * as acks from "./ack";
+import { LoginAck, LogoutAck } from "./ack";
 
 @ApiTags('auth')
+@ApiExtraModels(...Object.values(acks))
 @Controller('auth')
 export class AuthController {
     constructor(@Inject(Services.AUTH_SERVICE) private authServiceClient: ClientProxy) {}
 
     @ApiExceptions(InvalidCredentialsException)
+    @ApiResponseWithSchema(HttpStatusCodes.CREATED,LoginAck)
     @Post('login')
     login(@Body() dto: LoginDto) {
         return this.authServiceClient
@@ -25,6 +28,8 @@ export class AuthController {
     }
 
     @UseGuards(JWTGuard)
+    @ApiBearerAuth()
+    @ApiResponseWithSchema(HttpStatusCodes.CREATED,LogoutAck)
     @Post('logout')
     logout(@CurrentUser() user: IUser) {
         return this.authServiceClient

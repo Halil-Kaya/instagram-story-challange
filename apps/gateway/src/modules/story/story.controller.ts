@@ -5,16 +5,21 @@ import { IStory, IUser } from '@app/interfaces';
 import { StoryServicePayloads, StoryServicePatterns, Services } from '@app/payloads';
 import { timeout } from 'rxjs';
 import { JWTGuard } from '../../core/guard';
-import { CurrentUser, Paginate } from '../../core/decorator';
+import { ApiResponseWithSchema, CurrentUser, HttpStatusCodes, Paginate } from '../../core/decorator';
 import { PaginatedResponse, Pagination } from '@app/interfaces/pagination.interface';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiExtraModels, ApiTags } from '@nestjs/swagger';
+import * as acks from './ack';
+import { StoryCreateAck, GetStoriesAck } from './ack';
 
 @ApiTags('story')
+@ApiExtraModels(...Object.values(acks))
 @Controller('story')
 export class StoryController {
     constructor(@Inject(Services.STORY_SERVICE) private storyServiceClient: ClientProxy) {}
 
     @UseGuards(JWTGuard)
+    @ApiBearerAuth()
+    @ApiResponseWithSchema(HttpStatusCodes.CREATED, StoryCreateAck)
     @Post()
     async createStory(@Body() dto: StoryCreateDto, @CurrentUser() user: IUser) {
         return this.storyServiceClient
@@ -26,6 +31,9 @@ export class StoryController {
     }
 
     @UseGuards(JWTGuard)
+    @ApiBearerAuth()
+    @ApiExtraModels(IStory)
+    @ApiResponseWithSchema(HttpStatusCodes.OK, GetStoriesAck)
     @Get()
     async getStories(@Paginate() pagination: Pagination, @CurrentUser() user: IUser) {
         return this.storyServiceClient
